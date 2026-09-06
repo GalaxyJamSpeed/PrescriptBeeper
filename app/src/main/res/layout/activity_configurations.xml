@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="#020505">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CONFIGURATIONS"
+            android:textColor="#4be8ff"
+            android:textSize="16sp"
+            android:fontFamily="monospace"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp" />
+
+        <Button
+            android:id="@+id/btnAppCategories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="App Categories"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnExclusions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Exclusions"
+            android:layout_marginBottom="32dp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Beep Volume"
+            android:textColor="#4be8ff"
+            android:textSize="12sp"
+            android:fontFamily="monospace" />
+
+        <TextView
+            android:id="@+id/tvVolumeValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="100%"
+            android:textColor="#dff1ff"
+            android:textSize="11sp"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:layout_marginBottom="4dp" />
+
+        <SeekBar
+            android:id="@+id/seekBarVolume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Popup Duration"
+            android:textColor="#4be8ff"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:layout_marginTop="24dp" />
+
+        <TextView
+            android:id="@+id/tvDurationValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="5s"
+            android:textColor="#dff1ff"
+            android:textSize="11sp"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:layout_marginBottom="4dp" />
+
+        <SeekBar
+            android:id="@+id/seekBarDuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="15" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Per-App Cooldown"
+            android:textColor="#4be8ff"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:layout_marginTop="24dp" />
+
+        <TextView
+            android:id="@+id/tvCooldownValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="20s"
+            android:textColor="#dff1ff"
+            android:textSize="11sp"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:layout_marginBottom="4dp" />
+
+        <SeekBar
+            android:id="@+id/seekBarCooldown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="20" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Phone Battery Low Threshold"
+            android:textColor="#4be8ff"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:layout_marginTop="24dp" />
+
+        <TextView
+            android:id="@+id/tvBatteryThresholdValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="20%"
+            android:textColor="#dff1ff"
+            android:textSize="11sp"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:layout_marginBottom="4dp" />
+
+        <SeekBar
+            android:id="@+id/seekBarBatteryThreshold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="35" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Battery Restored Threshold"
+            android:textColor="#4be8ff"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:layout_marginTop="24dp" />
+
+        <TextView
+            android:id="@+id/tvBatteryRestoredValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="80%"
+            android:textColor="#dff1ff"
+            android:textSize="11sp"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:layout_marginBottom="4dp" />
+
+        <SeekBar
+            android:id="@+id/seekBarBatteryRestored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="50" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PRESCRIPT LINES"
+            android:textColor="#4be8ff"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:fontFamily="monospace"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="12dp" />
+
+        <Spinner
+            android:id="@+id/spinnerCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etNewLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Type a new line..."
+            android:textColor="#dff1ff"
+            android:textColorHint="#5c6975"
+            android:fontFamily="monospace"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnAddLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Line"
+            android:layout_marginBottom="24dp" />
+
+        <LinearLayout
+            android:id="@+id/customLinesContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="top|center_horizontal"
+    android:fitsSystemWindows="true"
+    android:padding="24dp"
+    android:background="#020505">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TESTS"
+        android:textColor="#4be8ff"
+        android:textSize="16sp"
+        android:fontFamily="monospace"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp" />
+
+    <Button
+        android:id="@+id/btnTestPopup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test the Popup"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/btnTestCalendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test Today's Calendar Check" />
+
+</LinearLayout>

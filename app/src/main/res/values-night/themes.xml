@@ -1,0 +1,22 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.PrescriptBeeper" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.PrescriptBeeper" parent="Base.Theme.PrescriptBeeper">
+        <item name="materialButtonStyle">@style/Widget.PrescriptBeeper.Button</item>
+    </style>
+
+    <style name="Widget.PrescriptBeeper.Button" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="backgroundTint">#10181c</item>
+        <item name="strokeColor">#35d7f0</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:textColor">#4be8ff</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+    </style>
+</resources>

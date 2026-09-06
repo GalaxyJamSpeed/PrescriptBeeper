@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widgetRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/bg_widget_dark"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/widgetCountText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="#4be8ff"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:fontFamily="monospace" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="2dp">
+
+        <TextView
+            android:id="@+id/widgetLabelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="STAGE 1"
+            android:textColor="#9fb3bd"
+            android:textSize="9sp"
+            android:fontFamily="monospace"
+            android:layout_marginEnd="4dp" />
+
+        <ImageView
+            android:id="@+id/widgetStageIcon"
+            android:layout_width="16dp"
+            android:layout_height="16dp" />
+
+    </LinearLayout>
+
+</LinearLayout>
