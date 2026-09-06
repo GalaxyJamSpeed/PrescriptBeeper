@@ -169,6 +169,32 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Earbuds Low Threshold"
+            android:textColor="#4be8ff"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:layout_marginTop="24dp" />
+
+        <TextView
+            android:id="@+id/tvEarbudsThresholdValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="30%"
+            android:textColor="#dff1ff"
+            android:textSize="11sp"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:layout_marginBottom="4dp" />
+
+        <SeekBar
+            android:id="@+id/seekBarEarbudsThreshold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="40" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="PRESCRIPT LINES"
             android:textColor="#4be8ff"
             android:textSize="14sp"

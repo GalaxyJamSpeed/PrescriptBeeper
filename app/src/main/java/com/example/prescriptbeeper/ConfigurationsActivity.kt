@@ -137,6 +137,21 @@ class ConfigurationsActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
+        val seekBarEarbudsThreshold = findViewById<SeekBar>(R.id.seekBarEarbudsThreshold)
+        val tvEarbudsThresholdValue = findViewById<TextView>(R.id.tvEarbudsThresholdValue)
+        val savedEarbudsThreshold = prefs.getInt("earbuds_low_threshold", 30)
+        seekBarEarbudsThreshold.progress = savedEarbudsThreshold - 10
+        tvEarbudsThresholdValue.text = "${savedEarbudsThreshold}%"
+        seekBarEarbudsThreshold.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                val percent = progress + 10
+                tvEarbudsThresholdValue.text = "${percent}%"
+                prefs.edit().putInt("earbuds_low_threshold", percent).apply()
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
+
         refreshCustomLinesList()
     }
 

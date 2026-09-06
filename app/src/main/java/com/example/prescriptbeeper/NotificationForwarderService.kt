@@ -17,11 +17,10 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import android.graphics.PixelFormat
+import android.bluetooth.BluetoothClass
 
 class NotificationForwarderService : NotificationListenerService() {
 
-    private val earbudsNameMatch = "a20i"
-    private val earbudsLowThreshold = 30
     private val lastFiredPerPackage = mutableMapOf<String, Long>()
 
     private val lastFiredKeyPerPackage = mutableMapOf<String, String>()
@@ -33,22 +32,30 @@ class NotificationForwarderService : NotificationListenerService() {
         override fun onReceive(context: Context, intent: Intent) {
             val device = intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
             val level = intent.getIntExtra("android.bluetooth.device.extra.BATTERY_LEVEL", -1)
-            val name = try { device?.name } catch (e: SecurityException) { null }
+            if (device == null || level == -1) return
 
-            if (name == null || level == -1) return
-            if (!name.lowercase().contains(earbudsNameMatch)) return
+            val isAudioDevice = try {
+                device.bluetoothClass?.majorDeviceClass == BluetoothClass.Device.Major.AUDIO_VIDEO
+            } catch (e: SecurityException) { false }
+            if (!isAudioDevice) return
+
+            val deviceAddress = try { device.address } catch (e: SecurityException) { null } ?: return
+            val deviceName = try { device.name } catch (e: SecurityException) { null } ?: "Earbuds"
 
             val prefs = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
-            val alreadyAlerted = prefs.getBoolean("earbuds_alerted", false)
+            val threshold = prefs.getInt("earbuds_low_threshold", 30)
+            val alertedDevices = (prefs.getStringSet("earbuds_alerted_devices", emptySet()) ?: emptySet()).toMutableSet()
 
-            if (level < earbudsLowThreshold && !alreadyAlerted) {
-                prefs.edit().putBoolean("earbuds_alerted", true).apply()
+            if (level < threshold && deviceAddress !in alertedDevices) {
+                alertedDevices.add(deviceAddress)
+                prefs.edit().putStringSet("earbuds_alerted_devices", alertedDevices).apply()
                 PrescriptTrigger.fire(
                     applicationContext, "EARBUDS_LOW",
-                    overrideText = "${PrescriptLines.getLine(applicationContext, "EARBUDS_LOW")} ($level%)"
+                    overrideText = "${PrescriptLines.getLine(applicationContext, "EARBUDS_LOW")} ($deviceName, $level%)"
                 )
-            } else if (level >= earbudsLowThreshold) {
-                prefs.edit().putBoolean("earbuds_alerted", false).apply()
+            } else if (level >= threshold && deviceAddress in alertedDevices) {
+                alertedDevices.remove(deviceAddress)
+                prefs.edit().putStringSet("earbuds_alerted_devices", alertedDevices).apply()
             }
         }
     }
