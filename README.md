@@ -20,8 +20,6 @@
 PrescriptBeeper turns ordinary phone events — texts, calls, calendar events, low battery, low earbuds battery — into stylized, full-screen **"Prescripts"**, mimicking the in-universe Index device from *Limbus Company*. Instead of a normal Android notification, you get a floating popup with a scramble-to-reveal text animation, a custom beep, and an Accept/Dismiss choice, styled after the device's cyan-on-black display.
 
 <p align="center">
-  <img src="app/src/main/res/drawable/ic_index_crest.png" width="70">
-  &nbsp;&nbsp;&nbsp;
   <img src="app/src/main/res/drawable/ictargetflower.png" width="70">
   &nbsp;&nbsp;&nbsp;
   <img src="app/src/main/res/drawable/icunlock1.png" width="70">
