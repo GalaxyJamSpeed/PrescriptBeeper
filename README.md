@@ -15,7 +15,7 @@
 
 ---
 
-## What is this?
+## Introduction
 
 PrescriptBeeper turns ordinary phone events (texts, calls, calendar events, low battery, low earbuds battery) into stylized, full-screen **"Prescripts"**, mimicking the in-universe Index device from *Limbus Company*. Instead of a normal Android notification, you get a floating popup with a scramble-to-reveal text animation, a custom beep, and an Accept/Dismiss choice, styled after the device's cyan-on-black display.
 
@@ -35,29 +35,29 @@ This started as a first-ever Kotlin project, built entirely feature-by-feature �
 
 ### 🔔 The Prescript Popup
 - Full-screen floating overlay (draws over any app, not just the lock screen)
-- Character-scramble reveal animation before the final line locks in
+- Character-scramble reveal animation before the final line is revealed
 - Custom beep sound, with an in-app volume slider
-- Configurable auto-dismiss timer with a live countdown badge
+- Configurable auto-dismiss timer with a live countdown badge top right
 - Shows the sending app's icon + sender name for messages/calls
-- Accept opens the source app directly; Dismiss just closes it
-- A footer tracks daily completions and displays your current **Unlock Stage** (1–3), resetting at midnight
+- Accept opens the app the notification was sent from directly; Dismiss just closes it
+- A footer that tracks daily completions and displays your current **Unlock Stage** (1–3), resetting at midnight
 
 ### 📡 Real-World Triggers
-- **Messages & Calls** — via notification listening, fully configurable per app
-- **Calendar** — a daily check against your phone's synced Google Calendar, once each morning
-- **Phone Battery** — low-battery and restored-battery alerts, both thresholds adjustable
-- **Bluetooth Earbuds/Headphones** — low-battery alerts for *any* connected Bluetooth audio device, not tied to one brand
+- **Messages & Calls** - via notification listening, fully configurable per app
+- **Calendar** | a daily check against your phone's synced Google Calendar, once each morning
+- **Phone Battery** - low-battery and restored-battery alerts, both thresholds adjustable
+- **Bluetooth Earbuds/Headphones** - low-battery alerts for *any* connected Bluetooth audio device
 - Per-app cooldowns and duplicate-notification protection, so one message never spams multiple popups
 
 ### 🗂️ App Categories & Exclusions
-- Assign any installed app to **Messages/Calls** or **Calendar**, or leave it untouched
-- **Exclusions** — mark specific apps (games, sensitive apps, etc.) to be silently tracked with a small on-screen flower badge, with no popup or sound at all
+- Assign any installed app to **Messages/Calls** or **Calendar**, or leave it untouched (doesn't trigger the popup)
+- **Exclusions** - mark specific apps (games, sensitive apps, etc.) to be silently tracked with a small on-screen flower badge, with no popup or sound at all
 - Both screens support live search across every installed app
 
 ### 📊 Stats & History
-- **Prescript Log** - the last 20 prescripts, with real notification content, sender, and outcome (Accepted / Dismissed / Expired)
+- **Prescript Log** - the last 20 "prescripts" (notifications), with real notification content, sender, and outcome (Accepted / Dismissed / Expired)
 - **Stats** - Day, Week, and Month views with a custom bar chart, busiest-day tracking, and a category breakdown
-- **Home Screen Widget** - today's completion count and current stage, at a glance
+- **Home Screen Widget** - today's completion count and current stage (Unlock 1/2/3)
 
 ### 💬 Speak With The Index
 - An in-app chatbot themed entirely around the Index [always in-character, always in caps, powered by Google's Gemini API (free tier)]
@@ -72,14 +72,14 @@ This started as a first-ever Kotlin project, built entirely feature-by-feature �
 ## Setup
 
 1. Download the APK from [Releases](../../releases)
-2. Tap the file on your Android phone and approve the one-time "install from this source" prompt
+2. Tap the file on your Android phone (no iPhone release) and approve the one-time "install from this source" prompt (if it appears)
 3. Open the app and walk through the **Permissions** screen (in Setup & Testing):
    - Notification Access
    - Display Over Other Apps
    - Calendar Access
    - Bluetooth & Notifications (requested automatically)
 
-> **Note:** the shared APK includes a Gemini API key baked in for the chatbot feature, using the maintainer's free-tier key. If you'd rather use your own, build from source below and supply your own key.
+> **Note:** the shared APK includes a Gemini API key baked in for the chatbot feature, using the free-tier key. Be wary that there is a limit on how many messages you can send daily.
 
 ### A note for Xiaomi/HyperOS devices
 Several permissions on MIUI/HyperOS are hidden behind extra manufacturer-specific toggles beyond stock Android's settings. If popups aren't appearing, check:
