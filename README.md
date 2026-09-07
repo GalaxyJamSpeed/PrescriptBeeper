@@ -41,6 +41,7 @@ This started as a first-ever Kotlin project, built entirely feature-by-feature �
 - Shows the sending app's icon + sender name for messages/calls
 - Accept opens the app the notification was sent from directly; Dismiss just closes it
 - A footer that tracks daily completions and displays your current **Unlock Stage** (1–3), resetting at midnight
+- Daily Reminders with custom messages
 
 ### 📡 Real-World Triggers
 - **Messages & Calls** - via notification listening, fully configurable per app
@@ -58,9 +59,6 @@ This started as a first-ever Kotlin project, built entirely feature-by-feature �
 - **Prescript Log** - the last 20 "prescripts" (notifications), with real notification content, sender, and outcome (Accepted / Dismissed / Expired)
 - **Stats** - Day, Week, and Month views with a custom bar chart, busiest-day tracking, and a category breakdown
 - **Home Screen Widget** - today's completion count and current stage (Unlock 1/2/3)
-
-### 💬 Speak With The Index
-- An in-app chatbot themed entirely around the Index [always in-character, always in caps, powered by Google's Gemini API (free tier)]
 
 ### ⚙️ Fully Configurable
 - Editable prescript line pools per category - add or remove your own custom lines anytime
