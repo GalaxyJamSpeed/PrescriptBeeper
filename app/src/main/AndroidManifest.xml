@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <queries>
         <intent>
@@ -50,9 +50,11 @@
         <activity android:name=".WeeklySummaryActivity" android:exported="false" />
         <activity android:name=".ConfigurationsActivity" android:exported="false" />
         <activity android:name=".AppPickerActivity" android:exported="false" />
-        <activity android:name=".ChatActivity" android:exported="false" />
         <activity android:name=".SetupActivity" android:exported="false" />
         <activity android:name=".ExclusionsActivity" android:exported="false" />
+
+        <activity android:name=".RemindersActivity" android:exported="false" />
+        <receiver android:name=".ReminderAlarmReceiver" android:exported="false" />
 
         <receiver
             android:name=".BatteryReceiver"

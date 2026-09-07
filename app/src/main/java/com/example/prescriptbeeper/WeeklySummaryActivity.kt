@@ -59,17 +59,17 @@ class WeeklySummaryActivity : AppCompatActivity() {
         dayButton = Button(this).apply {
             text = "Day"
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-            setOnClickListener { mode = Mode.DAY; refresh() }
+            setOnClickListener { mode = Mode.DAY; anchor = Calendar.getInstance(); refresh() }
         }
         weekButton = Button(this).apply {
             text = "Week"
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-            setOnClickListener { mode = Mode.WEEK; refresh() }
+            setOnClickListener { mode = Mode.WEEK; anchor = Calendar.getInstance(); refresh() }
         }
         monthButton = Button(this).apply {
             text = "Month"
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-            setOnClickListener { mode = Mode.MONTH; refresh() }
+            setOnClickListener { mode = Mode.MONTH; anchor = Calendar.getInstance(); refresh() }
         }
         modeRow.addView(dayButton)
         modeRow.addView(weekButton)

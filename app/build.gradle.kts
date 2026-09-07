@@ -2,19 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
-import java.util.Properties
-        import java.io.FileInputStream
-
-val localProperties = Properties()
-val localPropertiesFile = rootProject.file("local.properties")
-if (localPropertiesFile.exists()) {
-    localProperties.load(FileInputStream(localPropertiesFile))
-}
-
 android {
-    buildFeatures {
-        buildConfig = true
-    }
 
     namespace = "com.example.prescriptbeeper"
     compileSdk {
@@ -29,7 +17,6 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "GEMINI_API_KEY", "\"${localProperties.getProperty("gemini.api.key", "")}\"")
     }
 
     buildTypes {

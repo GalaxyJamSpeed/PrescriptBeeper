@@ -21,6 +21,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import android.graphics.PixelFormat
+import android.util.Log
 
 class NotificationForwarderService : NotificationListenerService() {
 
@@ -151,6 +152,7 @@ class NotificationForwarderService : NotificationListenerService() {
     override fun onNotificationPosted(sbn: StatusBarNotification) {
         super.onNotificationPosted(sbn)
         if (sbn.packageName == packageName) return
+        Log.d("ExclusionDebug", "pkg=${sbn.packageName} excluded=${ExcludedAppsConfig.getExcludedApps(applicationContext).contains(sbn.packageName)}")
 
         val excludedApps = ExcludedAppsConfig.getExcludedApps(applicationContext)
         val watchedApps = WatchedAppsConfig.getWatchedApps(applicationContext)

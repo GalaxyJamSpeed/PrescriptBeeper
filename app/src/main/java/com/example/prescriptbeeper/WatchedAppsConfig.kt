@@ -8,20 +8,9 @@ object WatchedAppsConfig {
     private const val ENTRY_SEP = "~~~"
     private const val KV_SEP = "="
 
-    private val defaults = mapOf(
-        "com.google.android.apps.messaging" to "COMMUNICATION",
-        "com.whatsapp" to "COMMUNICATION",
-        "com.android.dialer" to "COMMUNICATION",
-        "com.instagram.android" to "COMMUNICATION"
-    )
-
     fun getWatchedApps(context: Context): Map<String, String> {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val raw = prefs.getString(KEY, null)
-        if (raw == null) {
-            saveMap(context, defaults)
-            return defaults
-        }
+        val raw = prefs.getString(KEY, "") ?: ""
         if (raw.isBlank()) return emptyMap()
         return raw.split(ENTRY_SEP).mapNotNull { entry ->
             val idx = entry.indexOf(KV_SEP)

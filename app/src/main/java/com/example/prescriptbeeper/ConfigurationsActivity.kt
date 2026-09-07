@@ -66,13 +66,18 @@ class ConfigurationsActivity : AppCompatActivity() {
         val seekBarDuration = findViewById<SeekBar>(R.id.seekBarDuration)
         val tvDurationValue = findViewById<TextView>(R.id.tvDurationValue)
         val savedDuration = prefs.getInt("popup_duration_seconds", 5)
-        seekBarDuration.progress = savedDuration - 5
-        tvDurationValue.text = "${savedDuration}s"
+        seekBarDuration.progress = if (savedDuration == 0) 16 else savedDuration - 5
+        tvDurationValue.text = if (savedDuration == 0) "Infinite" else "${savedDuration}s"
         seekBarDuration.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                val seconds = progress + 5
-                tvDurationValue.text = "${seconds}s"
-                prefs.edit().putInt("popup_duration_seconds", seconds).apply()
+                if (progress == 16) {
+                    tvDurationValue.text = "Infinite"
+                    prefs.edit().putInt("popup_duration_seconds", 0).apply()
+                } else {
+                    val seconds = progress + 5
+                    tvDurationValue.text = "${seconds}s"
+                    prefs.edit().putInt("popup_duration_seconds", seconds).apply()
+                }
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
@@ -100,12 +105,31 @@ class ConfigurationsActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCategory.adapter = adapter
 
+        val removeDefaultsButton = findViewById<Button>(R.id.btnRemoveDefaults)
+
+        fun updateRemoveDefaultsButton() {
+            val category = categoryKeys[spinnerCategory.selectedItemPosition]
+            val hidden = PrescriptLines.areDefaultsHidden(this, category)
+            removeDefaultsButton.text = if (hidden) "Restore Default Lines" else "Remove Default Lines"
+        }
+
         spinnerCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 refreshCustomLinesList()
+                updateRemoveDefaultsButton()
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
+
+        removeDefaultsButton.setOnClickListener {
+            val category = categoryKeys[spinnerCategory.selectedItemPosition]
+            val currentlyHidden = PrescriptLines.areDefaultsHidden(this, category)
+            PrescriptLines.setDefaultsHidden(this, category, !currentlyHidden)
+            updateRemoveDefaultsButton()
+            Toast.makeText(this, if (!currentlyHidden) "Default lines removed" else "Default lines restored", Toast.LENGTH_SHORT).show()
+        }
+
+        updateRemoveDefaultsButton()
 
         findViewById<Button>(R.id.btnAddLine).setOnClickListener {
             val editText = findViewById<EditText>(R.id.etNewLine)

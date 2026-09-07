@@ -39,9 +39,24 @@ object PrescriptLines {
     )
 
     fun getLine(context: Context, category: String): String {
-        val defaults = defaultLines[category] ?: defaultLines.getValue("GENERIC")
+        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val defaultsHidden = prefs.getBoolean("defaults_hidden_$category", false)
+
+        val defaults = if (defaultsHidden) emptyList() else (defaultLines[category] ?: defaultLines.getValue("GENERIC"))
         val customs = getCustomLines(context, category)
-        return (defaults + customs).random()
+        val pool = defaults + customs
+
+        return if (pool.isEmpty()) "PLACEHOLDER PRESCRIPT" else pool.random()
+    }
+
+    fun areDefaultsHidden(context: Context, category: String): Boolean {
+        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        return prefs.getBoolean("defaults_hidden_$category", false)
+    }
+
+    fun setDefaultsHidden(context: Context, category: String, hidden: Boolean) {
+        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        prefs.edit().putBoolean("defaults_hidden_$category", hidden).apply()
     }
 
     fun getCustomLines(context: Context, category: String): List<String> {

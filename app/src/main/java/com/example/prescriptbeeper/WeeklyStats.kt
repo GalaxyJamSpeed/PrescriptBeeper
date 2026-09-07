@@ -95,6 +95,7 @@ object WeeklyStats {
         "BATTERY_LOW" -> "Battery"
         "EARBUDS_LOW" -> "Earbuds"
         "CALENDAR" -> "Calendar"
+        "REMINDER" -> "Reminders"
         else -> category
     }
 

@@ -160,7 +160,11 @@ class PrescriptOverlayService : Service() {
         view.findViewById<ImageView>(R.id.ivStageIcon).setImageResource(stageIcon)
 
         val duration = prefs.getInt("popup_duration_seconds", 5)
-        startCountdown(duration)
+        if (duration > 0) {
+            startCountdown(duration)
+        } else {
+            overlayView?.findViewById<TextView>(R.id.tvCountdown)?.text = "∞"
+        }
     }
 
     private fun startCountdown(totalSeconds: Int) {

@@ -38,4 +38,27 @@
         android:layout_height="wrap_content"
         android:text="Grant Calendar Access" />
 
+    <Button
+        android:id="@+id/btnBatteryOptimization"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Disable Battery Restriction"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnAutostart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enable Autostart (Xiaomi/MIUI)"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Not on a Xiaomi phone? The Autostart button opens your app\'s general settings instead - look for &quot;Auto-launch&quot;, &quot;Protected apps&quot;, or similar sections, depending on your phone\'s brand. (Or simply search how to enable Autostart in X phone brand)"
+        android:textColor="#8fa3ad"
+        android:textSize="10sp"
+        android:fontFamily="monospace"
+        android:layout_marginTop="12dp" />
+
 </LinearLayout>

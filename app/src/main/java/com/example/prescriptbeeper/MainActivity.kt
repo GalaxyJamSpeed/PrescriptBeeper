@@ -39,9 +39,6 @@ class MainActivity : AppCompatActivity() {
 
         CalendarScheduler.scheduleDailyCheck(this)
 
-        findViewById<Button>(R.id.btnOpenChat).setOnClickListener {
-            startActivity(Intent(this, ChatActivity::class.java))
-        }
 
         findViewById<Button>(R.id.btnOpenConfigurations).setOnClickListener {
             startActivity(Intent(this, ConfigurationsActivity::class.java))
@@ -57,6 +54,10 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.btnOpenSetup).setOnClickListener {
             startActivity(Intent(this, SetupActivity::class.java))
+        }
+
+        findViewById<Button>(R.id.btnOpenReminders).setOnClickListener {
+            startActivity(Intent(this, RemindersActivity::class.java))
         }
 
         val prefs = getSharedPreferences("prescript_prefs", MODE_PRIVATE)

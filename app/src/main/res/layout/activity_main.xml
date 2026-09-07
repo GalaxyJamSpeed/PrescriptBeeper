@@ -50,10 +50,10 @@
             android:layout_marginBottom="8dp" />
 
         <Button
-            android:id="@+id/btnOpenChat"
+            android:id="@+id/btnOpenReminders"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Speak With Hermes"
+            android:text="Reminders"
             android:layout_marginBottom="12dp" />
 
         <Button

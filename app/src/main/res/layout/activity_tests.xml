@@ -31,4 +31,32 @@
         android:layout_height="wrap_content"
         android:text="Test Today's Calendar Check" />
 
+    <Button
+        android:id="@+id/btnTestBatteryLow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test Battery Low"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnTestBatteryOk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test Battery Restored"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnTestEarbuds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test Earbuds Low"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnTestReminder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test Reminder"
+        android:layout_marginTop="16dp" />
+
 </LinearLayout>
