@@ -17,7 +17,7 @@
 
 ## What is this?
 
-PrescriptBeeper turns ordinary phone events — texts, calls, calendar events, low battery, low earbuds battery — into stylized, full-screen **"Prescripts"**, mimicking the in-universe Index device from *Limbus Company*. Instead of a normal Android notification, you get a floating popup with a scramble-to-reveal text animation, a custom beep, and an Accept/Dismiss choice, styled after the device's cyan-on-black display.
+PrescriptBeeper turns ordinary phone events (texts, calls, calendar events, low battery, low earbuds battery) into stylized, full-screen **"Prescripts"**, mimicking the in-universe Index device from *Limbus Company*. Instead of a normal Android notification, you get a floating popup with a scramble-to-reveal text animation, a custom beep, and an Accept/Dismiss choice, styled after the device's cyan-on-black display.
 
 <p align="center">
   <img src="app/src/main/res/drawable/ictargetflower.png" width="70">
@@ -55,15 +55,15 @@ This started as a first-ever Kotlin project, built entirely feature-by-feature �
 - Both screens support live search across every installed app
 
 ### 📊 Stats & History
-- **Prescript Log** — the last 20 prescripts, with real notification content, sender, and outcome (Accepted / Dismissed / Expired)
-- **Stats** — Day, Week, and Month views with a custom bar chart, busiest-day tracking, and a category breakdown
-- **Home Screen Widget** — today's completion count and current stage, at a glance
+- **Prescript Log** - the last 20 prescripts, with real notification content, sender, and outcome (Accepted / Dismissed / Expired)
+- **Stats** - Day, Week, and Month views with a custom bar chart, busiest-day tracking, and a category breakdown
+- **Home Screen Widget** - today's completion count and current stage, at a glance
 
 ### 💬 Speak With The Index
-- An in-app chatbot themed entirely around the Index — always in-character, always in caps, powered by Google's Gemini API (free tier)
+- An in-app chatbot themed entirely around the Index [always in-character, always in caps, powered by Google's Gemini API (free tier)]
 
 ### ⚙️ Fully Configurable
-- Editable prescript line pools per category — add or remove your own custom lines anytime
+- Editable prescript line pools per category - add or remove your own custom lines anytime
 - Adjustable volume, popup duration, per-app cooldown, and battery thresholds
 - A single switch to pause the entire system without uninstalling anything
 
@@ -82,7 +82,7 @@ This started as a first-ever Kotlin project, built entirely feature-by-feature �
 > **Note:** the shared APK includes a Gemini API key baked in for the chatbot feature, using the maintainer's free-tier key. If you'd rather use your own, build from source below and supply your own key.
 
 ### A note for Xiaomi/HyperOS devices
-Several permissions on MIUI/HyperOS are hidden behind extra manufacturer-specific toggles beyond stock Android's settings — if popups aren't appearing, check:
+Several permissions on MIUI/HyperOS are hidden behind extra manufacturer-specific toggles beyond stock Android's settings. If popups aren't appearing, check:
 - **Autostart** permission for the app
 - **Display pop-up windows while running in the background**
 - **Battery saver** set to "No restrictions" for this app
