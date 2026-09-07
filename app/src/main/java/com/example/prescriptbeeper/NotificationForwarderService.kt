@@ -221,15 +221,12 @@ class NotificationForwarderService : NotificationListenerService() {
         if (!Settings.canDrawOverlays(this)) return
 
         windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
-        val view = ImageView(this).apply {
-            setImageResource(R.drawable.ictargetflower)
-            setOnClickListener {
-                val intent = Intent(this@NotificationForwarderService, MarkedAppsActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-            }
-        }
-        badgeView = view
+        val prefs = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
+
+        val displayMetrics = resources.displayMetrics
+        val defaultX = displayMetrics.widthPixels - 140 - 20
+        val savedX = prefs.getInt("badge_pos_x", defaultX)
+        val savedY = prefs.getInt("badge_pos_y", 200)
 
         val overlayType =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
@@ -243,9 +240,58 @@ class NotificationForwarderService : NotificationListenerService() {
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
             PixelFormat.TRANSLUCENT
         )
-        params.gravity = Gravity.TOP or Gravity.END
-        params.x = 20
-        params.y = 200
+        params.gravity = Gravity.TOP or Gravity.START
+        params.x = savedX
+        params.y = savedY
+
+        val view = ImageView(this).apply {
+            setImageResource(R.drawable.ictargetflower)
+        }
+        badgeView = view
+
+        var initialX = 0
+        var initialY = 0
+        var initialTouchX = 0f
+        var initialTouchY = 0f
+        var isDragging = false
+
+        view.setOnTouchListener { v, event ->
+            when (event.action) {
+                android.view.MotionEvent.ACTION_DOWN -> {
+                    initialX = params.x
+                    initialY = params.y
+                    initialTouchX = event.rawX
+                    initialTouchY = event.rawY
+                    isDragging = false
+                    true
+                }
+                android.view.MotionEvent.ACTION_MOVE -> {
+                    val dx = (event.rawX - initialTouchX).toInt()
+                    val dy = (event.rawY - initialTouchY).toInt()
+                    if (kotlin.math.abs(dx) > 10 || kotlin.math.abs(dy) > 10) {
+                        isDragging = true
+                    }
+                    params.x = initialX + dx
+                    params.y = initialY + dy
+                    windowManager?.updateViewLayout(v, params)
+                    true
+                }
+                android.view.MotionEvent.ACTION_UP -> {
+                    if (isDragging) {
+                        prefs.edit()
+                            .putInt("badge_pos_x", params.x)
+                            .putInt("badge_pos_y", params.y)
+                            .apply()
+                    } else {
+                        val intent = Intent(this@NotificationForwarderService, MarkedAppsActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
 
         windowManager?.addView(view, params)
     }
