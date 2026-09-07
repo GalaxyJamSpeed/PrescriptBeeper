@@ -1,6 +1,8 @@
 package com.example.prescriptbeeper
 
 import android.app.Notification
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothClass
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -8,6 +10,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import android.provider.Settings
 import android.service.notification.NotificationListenerService
@@ -17,16 +21,24 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import android.graphics.PixelFormat
-import android.bluetooth.BluetoothClass
 
 class NotificationForwarderService : NotificationListenerService() {
 
     private val lastFiredPerPackage = mutableMapOf<String, Long>()
-
     private val lastFiredKeyPerPackage = mutableMapOf<String, String>()
 
     private var badgeView: View? = null
     private var windowManager: WindowManager? = null
+
+    private val pollHandler = Handler(Looper.getMainLooper())
+    private val pollIntervalMs = 5 * 60 * 1000L // 5 minutes
+
+    private val pollRunnable = object : Runnable {
+        override fun run() {
+            pollConnectedDevicesForBattery()
+            pollHandler.postDelayed(this, pollIntervalMs)
+        }
+    }
 
     private val earbudsBatteryReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -42,21 +54,7 @@ class NotificationForwarderService : NotificationListenerService() {
             val deviceAddress = try { device.address } catch (e: SecurityException) { null } ?: return
             val deviceName = try { device.name } catch (e: SecurityException) { null } ?: "Earbuds"
 
-            val prefs = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
-            val threshold = prefs.getInt("earbuds_low_threshold", 30)
-            val alertedDevices = (prefs.getStringSet("earbuds_alerted_devices", emptySet()) ?: emptySet()).toMutableSet()
-
-            if (level < threshold && deviceAddress !in alertedDevices) {
-                alertedDevices.add(deviceAddress)
-                prefs.edit().putStringSet("earbuds_alerted_devices", alertedDevices).apply()
-                PrescriptTrigger.fire(
-                    applicationContext, "EARBUDS_LOW",
-                    overrideText = "${PrescriptLines.getLine(applicationContext, "EARBUDS_LOW")} ($deviceName, $level%)"
-                )
-            } else if (level >= threshold && deviceAddress in alertedDevices) {
-                alertedDevices.remove(deviceAddress)
-                prefs.edit().putStringSet("earbuds_alerted_devices", alertedDevices).apply()
-            }
+            checkAndAlertForDevice(deviceAddress, deviceName, level)
         }
     }
 
@@ -70,9 +68,8 @@ class NotificationForwarderService : NotificationListenerService() {
 
             val prefs = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
             val threshold = prefs.getInt("battery_low_threshold", 20)
-            val alreadyAlerted = prefs.getBoolean("phone_battery_alerted", false)
-
             val restoredThreshold = prefs.getInt("battery_restored_threshold", 80)
+            val alreadyAlerted = prefs.getBoolean("phone_battery_alerted", false)
 
             if (percent <= threshold && !alreadyAlerted) {
                 prefs.edit().putBoolean("phone_battery_alerted", true).apply()
@@ -90,6 +87,48 @@ class NotificationForwarderService : NotificationListenerService() {
         }
     }
 
+    private fun checkAndAlertForDevice(deviceAddress: String, deviceName: String, level: Int) {
+        val prefs = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
+        val threshold = prefs.getInt("earbuds_low_threshold", 30)
+        val alertedDevices = (prefs.getStringSet("earbuds_alerted_devices", emptySet()) ?: emptySet()).toMutableSet()
+
+        if (level < threshold && deviceAddress !in alertedDevices) {
+            alertedDevices.add(deviceAddress)
+            prefs.edit().putStringSet("earbuds_alerted_devices", alertedDevices).apply()
+            PrescriptTrigger.fire(
+                applicationContext, "EARBUDS_LOW",
+                overrideText = "${PrescriptLines.getLine(applicationContext, "EARBUDS_LOW")} ($deviceName, $level%)"
+            )
+        } else if (level >= threshold && deviceAddress in alertedDevices) {
+            alertedDevices.remove(deviceAddress)
+            prefs.edit().putStringSet("earbuds_alerted_devices", alertedDevices).apply()
+        }
+    }
+
+    private fun pollConnectedDevicesForBattery() {
+        val adapter = BluetoothAdapter.getDefaultAdapter() ?: return
+        val bondedDevices = try { adapter.bondedDevices } catch (e: SecurityException) { return } ?: return
+
+        for (device in bondedDevices) {
+            val isAudioDevice = try {
+                device.bluetoothClass?.majorDeviceClass == BluetoothClass.Device.Major.AUDIO_VIDEO
+            } catch (e: SecurityException) { false }
+            if (!isAudioDevice) continue
+
+            val level = try {
+                val method = BluetoothDevice::class.java.getMethod("getBatteryLevel")
+                method.invoke(device) as? Int ?: -1
+            } catch (e: Exception) { -1 }
+
+            if (level == -1) continue
+
+            val deviceAddress = try { device.address } catch (e: SecurityException) { null } ?: continue
+            val deviceName = try { device.name } catch (e: SecurityException) { null } ?: "Earbuds"
+
+            checkAndAlertForDevice(deviceAddress, deviceName, level)
+        }
+    }
+
     override fun onListenerConnected() {
         super.onListenerConnected()
         registerReceiver(
@@ -97,6 +136,7 @@ class NotificationForwarderService : NotificationListenerService() {
             IntentFilter("android.bluetooth.device.action.BATTERY_LEVEL_CHANGED")
         )
         registerReceiver(phoneBatteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        pollHandler.post(pollRunnable)
         updateUnreadBadge()
     }
 
@@ -104,6 +144,7 @@ class NotificationForwarderService : NotificationListenerService() {
         super.onListenerDisconnected()
         try { unregisterReceiver(earbudsBatteryReceiver) } catch (e: Exception) {}
         try { unregisterReceiver(phoneBatteryReceiver) } catch (e: Exception) {}
+        pollHandler.removeCallbacksAndMessages(null)
         hideBadge()
     }
 
@@ -158,7 +199,6 @@ class NotificationForwarderService : NotificationListenerService() {
         val watchedApps = WatchedAppsConfig.getWatchedApps(applicationContext)
 
         if (sbn.packageName in excludedApps || sbn.packageName in watchedApps.keys) {
-            lastFiredPerPackage.remove(sbn.packageName)
             lastFiredPerPackage.remove(sbn.packageName)
             lastFiredKeyPerPackage.remove(sbn.packageName)
 

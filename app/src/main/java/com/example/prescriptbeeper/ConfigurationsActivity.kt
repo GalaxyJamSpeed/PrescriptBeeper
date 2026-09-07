@@ -17,6 +17,14 @@ import android.content.Intent
 
 class ConfigurationsActivity : AppCompatActivity() {
 
+    private fun setupCollapsible(header: Button, container: LinearLayout, title: String) {
+        header.setOnClickListener {
+            val expanding = container.visibility != View.VISIBLE
+            container.visibility = if (expanding) View.VISIBLE else View.GONE
+            header.text = if (expanding) "▾ $title" else "▸ $title"
+        }
+    }
+
     private val categoryKeys = PrescriptLines.editableCategories
     private val categoryLabels = listOf("Messages/Calls", "Battery Low", "Battery Restored", "Earbuds Low", "Calendar")
 
@@ -26,6 +34,10 @@ class ConfigurationsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_configurations)
+
+        setupCollapsible(findViewById(R.id.headerAudio), findViewById(R.id.audioContainer), "AUDIO")
+        setupCollapsible(findViewById(R.id.headerTiming), findViewById(R.id.timingContainer), "TIMING")
+        setupCollapsible(findViewById(R.id.headerThresholds), findViewById(R.id.thresholdsContainer), "THRESHOLDS")
 
         findViewById<Button>(R.id.btnAppCategories).setOnClickListener {
             startActivity(Intent(this, AppPickerActivity::class.java))
