@@ -77,6 +77,7 @@ This started as a first-ever Kotlin project, built entirely feature-by-feature â
    - Bluetooth & Notifications (requested automatically)
    - Disable Battery Restriciton
    - Enable Autostart
+   - Enable Usage Access
 4. Head into "Configurations" -> "App Categories" and select which apps you want the Prescript popup to trigger on
 
 ### A note for Xiaomi/HyperOS devices
