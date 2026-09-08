@@ -26,7 +26,7 @@ class ConfigurationsActivity : AppCompatActivity() {
     }
 
     private val categoryKeys = PrescriptLines.editableCategories
-    private val categoryLabels = listOf("Messages/Calls", "Battery Low", "Battery Restored", "Earbuds Low", "Calendar")
+    private val categoryLabels = listOf("Messages/Calls", "Battery Low", "Battery Restored", "Earbuds Low", "Calendar", "Custom")
 
     private lateinit var spinnerCategory: Spinner
     private lateinit var customLinesContainer: LinearLayout

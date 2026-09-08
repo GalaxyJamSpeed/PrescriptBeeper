@@ -36,8 +36,8 @@ class PrescriptWidgetProvider : AppWidgetProvider() {
             val count = if (lastDate != today) 0 else prefs.getInt("prescripts_completed", 0)
 
             val (stage, icon) = when {
-                count >= 20 -> 3 to R.drawable.icunlock3
-                count >= 10 -> 2 to R.drawable.icunlock2
+                count >= 30 -> 3 to R.drawable.icunlock3
+                count >= 15 -> 2 to R.drawable.icunlock2
                 else -> 1 to R.drawable.icunlock1
             }
 

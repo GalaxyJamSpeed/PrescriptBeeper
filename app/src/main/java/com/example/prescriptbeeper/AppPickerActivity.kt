@@ -19,8 +19,8 @@ import androidx.appcompat.app.AppCompatActivity
 
 class AppPickerActivity : AppCompatActivity() {
 
-    private val categoryOptions = listOf("Not Watched", "Messages/Calls", "Calendar")
-    private val categoryKeys = listOf("", "COMMUNICATION", "CALENDAR")
+    private val categoryOptions = listOf("Not Watched", "Messages/Calls", "Calendar", "Custom")
+    private val categoryKeys = listOf("", "COMMUNICATION", "CALENDAR", "CUSTOM")
 
     private lateinit var pm: PackageManager
     private lateinit var allApps: List<Pair<String, String>>
@@ -108,6 +108,7 @@ class AppPickerActivity : AppCompatActivity() {
         val sections = listOf(
             "MESSAGES/CALLS" to filtered.filter { watchedApps[it.first] == "COMMUNICATION" },
             "CALENDAR" to filtered.filter { watchedApps[it.first] == "CALENDAR" },
+            "CUSTOM" to filtered.filter { watchedApps[it.first] == "CUSTOM" },
             "NOT WATCHED" to filtered.filter { watchedApps[it.first] == null }
         )
 

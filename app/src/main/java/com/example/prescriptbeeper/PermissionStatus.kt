@@ -33,4 +33,13 @@ object PermissionStatus {
         return hasNotificationAccess(context) && hasOverlayPermission(context) &&
                 hasCalendarPermission(context) && hasBatteryExemption(context)
     }
+
+    fun hasUsageAccess(context: Context): Boolean {
+        val appOps = context.getSystemService(Context.APP_OPS_SERVICE) as android.app.AppOpsManager
+        val mode = appOps.checkOpNoThrow(
+            android.app.AppOpsManager.OPSTR_GET_USAGE_STATS,
+            android.os.Process.myUid(), context.packageName
+        )
+        return mode == android.app.AppOpsManager.MODE_ALLOWED
+    }
 }

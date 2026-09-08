@@ -92,10 +92,12 @@ object WeeklyStats {
 
     fun friendlyCategoryName(category: String): String = when (category) {
         "COMMUNICATION" -> "Messages/Calls"
-        "BATTERY_LOW" -> "Battery"
+        "BATTERY_LOW" -> "Battery Low"
+        "BATTERY_OK" -> "Battery Restored"
         "EARBUDS_LOW" -> "Earbuds"
         "CALENDAR" -> "Calendar"
         "REMINDER" -> "Reminders"
+        "CUSTOM" -> "Custom"
         else -> category
     }
 

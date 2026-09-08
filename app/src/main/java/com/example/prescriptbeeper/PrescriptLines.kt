@@ -8,7 +8,7 @@ object PrescriptLines {
     private const val CUSTOM_PREFIX = "custom_lines_"
     private const val SEPARATOR = "~~~"
 
-    val editableCategories = listOf("COMMUNICATION", "BATTERY_LOW", "BATTERY_OK", "EARBUDS_LOW", "CALENDAR")
+    val editableCategories = listOf("COMMUNICATION", "BATTERY_LOW", "BATTERY_OK", "EARBUDS_LOW", "CALENDAR", "CUSTOM")
 
     private val defaultLines = mapOf(
         "COMMUNICATION" to listOf(

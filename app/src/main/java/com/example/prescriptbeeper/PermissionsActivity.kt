@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
+import android.provider.Settings.ACTION_USAGE_ACCESS_SETTINGS
 
 class PermissionsActivity : AppCompatActivity() {
 
@@ -81,6 +82,10 @@ class PermissionsActivity : AppCompatActivity() {
                 startActivity(fallback)
             }
         }
+
+        findViewById<MaterialButton>(R.id.btnUsageAccess).setOnClickListener {
+            startActivity(Intent(ACTION_USAGE_ACCESS_SETTINGS))
+        }
     }
 
     override fun onResume() {
@@ -99,5 +104,6 @@ class PermissionsActivity : AppCompatActivity() {
         setButtonGranted(findViewById(R.id.btnOverlayPermission), PermissionStatus.hasOverlayPermission(this))
         setButtonGranted(findViewById(R.id.btnCalendarAccess), PermissionStatus.hasCalendarPermission(this))
         setButtonGranted(findViewById(R.id.btnBatteryOptimization), PermissionStatus.hasBatteryExemption(this))
+        setButtonGranted(findViewById(R.id.btnUsageAccess), PermissionStatus.hasUsageAccess(this))
     }
 }

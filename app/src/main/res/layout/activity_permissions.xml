@@ -52,6 +52,13 @@
         android:text="Enable Autostart (Xiaomi/MIUI)"
         android:layout_marginTop="16dp" />
 
+    <Button
+        android:id="@+id/btnUsageAccess"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Grant Usage Access (for Do Not Disturb Apps)"
+        android:layout_marginTop="16dp" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

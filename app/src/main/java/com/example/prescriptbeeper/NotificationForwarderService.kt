@@ -152,15 +152,9 @@ class NotificationForwarderService : NotificationListenerService() {
     override fun onNotificationPosted(sbn: StatusBarNotification) {
         super.onNotificationPosted(sbn)
         if (sbn.packageName == packageName) return
-        Log.d("ExclusionDebug", "pkg=${sbn.packageName} excluded=${ExcludedAppsConfig.getExcludedApps(applicationContext).contains(sbn.packageName)}")
 
-        val excludedApps = ExcludedAppsConfig.getExcludedApps(applicationContext)
         val watchedApps = WatchedAppsConfig.getWatchedApps(applicationContext)
-
-        val isExcluded = sbn.packageName in excludedApps
-        val category = watchedApps[sbn.packageName]
-
-        if (!isExcluded && category == null) return
+        val category = watchedApps[sbn.packageName] ?: return
 
         val prefs = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
 
@@ -169,7 +163,9 @@ class NotificationForwarderService : NotificationListenerService() {
         prefs.edit().putStringSet("unread_packages", unread).apply()
         updateUnreadBadge()
 
-        if (isExcluded) return
+        val dndApps = ExcludedAppsConfig.getExcludedApps(applicationContext)
+        val currentForeground = ForegroundAppDetector.getCurrentForegroundApp(applicationContext)
+        if (currentForeground != null && currentForeground in dndApps) return
 
         if (lastFiredKeyPerPackage[sbn.packageName] == sbn.key) return
 
@@ -187,7 +183,7 @@ class NotificationForwarderService : NotificationListenerService() {
             val content = listOf(title, body).filter { it.isNotBlank() }.joinToString(": ")
 
             PrescriptTrigger.fire(
-                applicationContext, category!!,
+                applicationContext, category,
                 sourcePackage = sbn.packageName,
                 notificationContent = content,
                 senderName = title.ifBlank { null }
@@ -197,10 +193,9 @@ class NotificationForwarderService : NotificationListenerService() {
 
     override fun onNotificationRemoved(sbn: StatusBarNotification) {
         super.onNotificationRemoved(sbn)
-        val excludedApps = ExcludedAppsConfig.getExcludedApps(applicationContext)
         val watchedApps = WatchedAppsConfig.getWatchedApps(applicationContext)
 
-        if (sbn.packageName in excludedApps || sbn.packageName in watchedApps.keys) {
+        if (sbn.packageName in watchedApps.keys) {
             lastFiredPerPackage.remove(sbn.packageName)
             lastFiredKeyPerPackage.remove(sbn.packageName)
 

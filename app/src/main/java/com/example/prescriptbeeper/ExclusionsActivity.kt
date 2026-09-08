@@ -49,7 +49,7 @@ class ExclusionsActivity : AppCompatActivity() {
         })
 
         root.addView(TextView(this).apply {
-            text = "Excluded apps never show the popup — only the marked-apps flower, silently."
+            text = "While you're inside one of these apps, no popup will interrupt you — regardless of which app the notification came from."
             setTextColor(0xFF8fa3ad.toInt())
             textSize = 11f
             gravity = Gravity.CENTER

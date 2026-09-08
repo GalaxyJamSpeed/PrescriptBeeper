@@ -84,8 +84,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        val hasDndApps = ExcludedAppsConfig.getExcludedApps(this).isNotEmpty()
+        val needsUsageAccess = hasDndApps && !PermissionStatus.hasUsageAccess(this)
+        val missingCritical = !PermissionStatus.allCriticalGranted(this)
+
         findViewById<TextView>(R.id.tvPermissionsMissing).visibility =
-            if (PermissionStatus.allCriticalGranted(this)) View.GONE else View.VISIBLE
+            if (missingCritical || needsUsageAccess) View.VISIBLE else View.GONE
 
         findViewById<TextView>(R.id.tvNoAppsWatched).visibility =
             if (WatchedAppsConfig.getWatchedApps(this).isEmpty()) View.VISIBLE else View.GONE
