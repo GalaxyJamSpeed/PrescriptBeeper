@@ -41,6 +41,7 @@ This started as a first-ever Kotlin project, built entirely feature-by-feature â
 - Shows the sending app's icon + sender name for messages/calls
 - Accept opens the app the notification was sent from directly; Dismiss just closes it
 - A footer that tracks daily completions and displays your current **Unlock Stage** (1â€“3), resetting at midnight
+- Daily Reminders with custom messages
 
 ### ðŸ“¡ Real-World Triggers
 - **Messages & Calls** - via notification listening, fully configurable per app
@@ -59,9 +60,6 @@ This started as a first-ever Kotlin project, built entirely feature-by-feature â
 - **Stats** - Day, Week, and Month views with a custom bar chart, busiest-day tracking, and a category breakdown
 - **Home Screen Widget** - today's completion count and current stage (Unlock 1/2/3)
 
-### ðŸ’¬ Speak With The Index
-- An in-app chatbot themed entirely around the Index [always in-character, always in caps, powered by Google's Gemini API (free tier)]
-
 ### âš™ï¸ Fully Configurable
 - Editable prescript line pools per category - add or remove your own custom lines anytime
 - Adjustable volume, popup duration, per-app cooldown, and battery thresholds
@@ -78,8 +76,9 @@ This started as a first-ever Kotlin project, built entirely feature-by-feature â
    - Display Over Other Apps
    - Calendar Access
    - Bluetooth & Notifications (requested automatically)
-
-> **Note:** the shared APK includes a Gemini API key baked in for the chatbot feature, using the free-tier key. Be wary that there is a limit on how many messages you can send daily.
+   - Disable Battery Restriciton
+   - Enable Autostart
+4. Head into "Configurations" -> "App Categories" and select which apps you want the Prescript popup to trigger on
 
 ### A note for Xiaomi/HyperOS devices
 Several permissions on MIUI/HyperOS are hidden behind extra manufacturer-specific toggles beyond stock Android's settings. If popups aren't appearing, check:
