@@ -80,8 +80,6 @@ This started as a first-ever Kotlin project, built entirely feature-by-feature â
    - Enable Autostart
 4. Head into "Configurations" -> "App Categories" and select which apps you want the Prescript popup to trigger on
 
-> **Note:** the shared APK includes a Gemini API key baked in for the chatbot feature, using the free-tier key. Be wary that there is a limit on how many messages you can send daily.
-
 ### A note for Xiaomi/HyperOS devices
 Several permissions on MIUI/HyperOS are hidden behind extra manufacturer-specific toggles beyond stock Android's settings. If popups aren't appearing, check:
 - **Autostart** permission for the app
