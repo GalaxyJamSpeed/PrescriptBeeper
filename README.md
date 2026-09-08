@@ -76,6 +76,9 @@ This started as a first-ever Kotlin project, built entirely feature-by-feature â
    - Display Over Other Apps
    - Calendar Access
    - Bluetooth & Notifications (requested automatically)
+   - Disable Battery Restriciton
+   - Enable Autostart
+4. Head into "Configurations" -> "App Categories" and select which apps you want the Prescript popup to trigger on
 
 > **Note:** the shared APK includes a Gemini API key baked in for the chatbot feature, using the free-tier key. Be wary that there is a limit on how many messages you can send daily.
 
