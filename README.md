@@ -19,13 +19,12 @@
 
 PrescriptBeeper turns ordinary phone events (texts, calls, calendar events, low battery, low earbuds battery) into stylized, full-screen **"Prescripts"**, mimicking the in-universe Index device from *Limbus Company*. Instead of a normal Android notification, you get a floating popup with a scramble-to-reveal text animation, a custom beep, and an Accept/Dismiss choice, styled after the device's cyan-on-black display.
 
-<p align="center">
-  <img src="app/src/main/res/drawable/ictargetflower.png" width="70">
-  &nbsp;&nbsp;&nbsp;
-  <img src="app/src/main/res/drawable/icunlock1.png" width="70">
-  <img src="app/src/main/res/drawable/icunlock2.png" width="70">
-  <img src="app/src/main/res/drawable/icunlock3.png" width="70">
-</p>
+<div align="center">
+  <img width="100" height="100" alt="Rien_Story_Icon" src="https://github.com/user-attachments/assets/ca3846a0-969d-4757-827f-7d503044b10d" />
+  <br>
+  <em>"The waves are lonely"</em>
+</div>
+
 
 This started as a first-ever Kotlin project, built entirely feature-by-feature — see [Tech Notes](#tech-notes--hyperos-quirks) for the Android/HyperOS-specific issues solved along the way.
 
@@ -45,7 +44,7 @@ This started as a first-ever Kotlin project, built entirely feature-by-feature �
 
 ### 📡 Real-World Triggers
 - **Messages & Calls** - via notification listening, fully configurable per app
-- **Calendar** | a daily check against your phone's synced Google Calendar, once each morning
+- **Calendar** - a daily check against your phone's synced Google Calendar, once each morning
 - **Phone Battery** - low-battery and restored-battery alerts, both thresholds adjustable
 - **Bluetooth Earbuds/Headphones** - low-battery alerts for *any* connected Bluetooth audio device
 - Per-app cooldowns and duplicate-notification protection, so one message never spams multiple popups
@@ -85,6 +84,13 @@ Several permissions on MIUI/HyperOS are hidden behind extra manufacturer-specifi
 - **Autostart** permission for the app
 - **Display pop-up windows while running in the background**
 - **Battery saver** set to "No restrictions" for this app
+
+<div align="center">
+  <img width="100" height="100" alt="Sora_Story_Icon" src="https://github.com/user-attachments/assets/ead76d30-65b8-4cc7-9bdc-0f4e31f08c2e" />
+  <br>
+  <em>"So simple! What a great job I did...right?</em>
+</div>
+
 
 ---
 
