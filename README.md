@@ -88,7 +88,7 @@ Several permissions on MIUI/HyperOS are hidden behind extra manufacturer-specifi
 <div align="center">
   <img width="100" height="100" alt="Sora_Story_Icon" src="https://github.com/user-attachments/assets/ead76d30-65b8-4cc7-9bdc-0f4e31f08c2e" />
   <br>
-  <em>"So simple! What a great job I did...right?</em>
+  <em>"So simple! What a great job I did...right?"</em>
 </div>
 
 
@@ -106,3 +106,9 @@ This project intentionally avoids two "expected" approaches that turned out to b
 ## Disclaimer
 
 This is an unofficial, non-commercial fan project inspired by *Limbus Company*, created by Project Moon. All game-related names, concepts, and imagery referenced belong to their respective owners. PrescriptBeeper is a personal utility app and is not affiliated with or endorsed by Project Moon.
+
+<div align="center">
+  <img width="100" height="100" alt="The_Index_Logo" src="https://github.com/user-attachments/assets/8780b00c-3516-401d-9d29-4dc3f529c4be" />
+  <br>
+  <em>"_THE INDEX AWAITS YOUR PARTICIPATION._"</em>
+</div>
