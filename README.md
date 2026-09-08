@@ -38,8 +38,8 @@ This started as a first-ever Kotlin project, built entirely feature-by-feature �
 - Custom beep sound, with an in-app volume slider
 - Configurable auto-dismiss timer with a live countdown badge top right
 - Shows the sending app's icon + sender name for messages/calls
-- Accept opens the app the notification was sent from directly; Dismiss just closes it
-- A footer that tracks daily completions and displays your current **Unlock Stage** (1–3), resetting at midnight
+- Accept opens the app the notification was sent from directly; Dismiss/Letting the popup expire grants "Karmic Consequence" (purely visual)
+- A footer that tracks daily completions and displays your current **Unlock Stage** (1–3), **Karmic Consequence** resetting at midnight
 - Daily Reminders with custom messages
 
 ### 📡 Real-World Triggers
@@ -57,7 +57,7 @@ This started as a first-ever Kotlin project, built entirely feature-by-feature �
 ### 📊 Stats & History
 - **Prescript Log** - the last 20 "prescripts" (notifications), with real notification content, sender, and outcome (Accepted / Dismissed / Expired)
 - **Stats** - Day, Week, and Month views with a custom bar chart, busiest-day tracking, and a category breakdown
-- **Home Screen Widget** - today's completion count and current stage (Unlock 1/2/3)
+- **Home Screen Widget** - today's completion count, current stage (Unlock 1/2/3) and Karmic Consequence
 
 ### ⚙️ Fully Configurable
 - Editable prescript line pools per category - add or remove your own custom lines anytime
