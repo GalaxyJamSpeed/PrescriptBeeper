@@ -41,10 +41,20 @@ class PrescriptWidgetProvider : AppWidgetProvider() {
                 else -> 1 to R.drawable.icunlock1
             }
 
+
             val views = RemoteViews(context.packageName, R.layout.widget_prescript)
             views.setTextViewText(R.id.widgetCountText, "$count")
             views.setTextViewText(R.id.widgetLabelText, "STAGE $stage")
             views.setImageViewResource(R.id.widgetStageIcon, icon)
+
+            val karmicCount = if (lastDate != today) 0 else prefs.getInt("karmic_consequences", 0)
+            if (karmicCount > 0) {
+                views.setViewVisibility(R.id.widgetKarmicRow, android.view.View.VISIBLE)
+                views.setTextViewText(R.id.widgetKarmicCount, "$karmicCount")
+                views.setImageViewResource(R.id.widgetKarmicIcon, if (karmicCount >= 5) R.drawable.ickarmic2 else R.drawable.ickarmic1)
+            } else {
+                views.setViewVisibility(R.id.widgetKarmicRow, android.view.View.GONE)
+            }
 
             val launchIntent = Intent(context, MainActivity::class.java)
             val pendingIntent = PendingIntent.getActivity(

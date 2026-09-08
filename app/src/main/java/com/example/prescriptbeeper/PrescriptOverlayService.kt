@@ -34,10 +34,10 @@ class PrescriptOverlayService : Service() {
     private var sourcePackage: String? = null
     private var currentLogId: String = ""
     private var notificationContent: String = ""
-
     private var senderName: String? = null
-
     private var category: String = "GENERIC"
+
+    private val karmicFortunaThreshold = 25
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -149,6 +149,7 @@ class PrescriptOverlayService : Service() {
 
         view.findViewById<Button>(R.id.btnDismiss).setOnClickListener {
             PrescriptLog.updateStatus(applicationContext, currentLogId, "DISMISSED")
+            recordKarmicConsequence()
             dismiss()
         }
 
@@ -158,6 +159,20 @@ class PrescriptOverlayService : Service() {
         val (stage, stageIcon) = stageFor(completedCount)
         view.findViewById<TextView>(R.id.tvFooterCount).text = "$completedCount prescripts completed — Stage $stage"
         view.findViewById<ImageView>(R.id.ivStageIcon).setImageResource(stageIcon)
+
+        val karmicCount = prefs.getInt("karmic_consequences", 0)
+        val karmicRow = view.findViewById<LinearLayout>(R.id.karmicRow)
+        if (karmicCount > 0) {
+            karmicRow.visibility = View.VISIBLE
+            val isFortuna = karmicCount >= karmicFortunaThreshold
+            val karmicIcon = if (isFortuna) R.drawable.ickarmic2 else R.drawable.ickarmic1
+            view.findViewById<ImageView>(R.id.ivKarmicIcon).setImageResource(karmicIcon)
+            view.findViewById<TextView>(R.id.tvKarmicCount).text = "$karmicCount"
+            view.findViewById<TextView>(R.id.tvKarmicLabel).text =
+                if (isFortuna) "- KARMIC CONSEQUENCE [FORTUNA]" else "- KARMIC CONSEQUENCE"
+        } else {
+            karmicRow.visibility = View.GONE
+        }
 
         val duration = prefs.getInt("popup_duration_seconds", 5)
         if (duration > 0) {
@@ -177,6 +192,7 @@ class PrescriptOverlayService : Service() {
                 remaining--
                 if (remaining <= 0) {
                     PrescriptLog.updateStatus(applicationContext, currentLogId, "EXPIRED")
+                    recordKarmicConsequence()
                     dismiss()
                     return
                 }
@@ -247,9 +263,17 @@ class PrescriptOverlayService : Service() {
         if (lastDate != today) {
             prefs.edit()
                 .putInt("prescripts_completed", 0)
+                .putInt("karmic_consequences", 0)
                 .putString("last_reset_date", today)
                 .apply()
             PrescriptWidgetProvider.updateAll(this)
         }
+    }
+
+    private fun recordKarmicConsequence() {
+        val prefs = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
+        val newCount = prefs.getInt("karmic_consequences", 0) + 1
+        prefs.edit().putInt("karmic_consequences", newCount).apply()
+        PrescriptWidgetProvider.updateAll(applicationContext)
     }
 }
