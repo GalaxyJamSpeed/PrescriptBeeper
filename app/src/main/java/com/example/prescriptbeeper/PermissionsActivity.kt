@@ -4,15 +4,16 @@ import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
-import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.button.MaterialButton
 
 class PermissionsActivity : AppCompatActivity() {
 
@@ -21,17 +22,18 @@ class PermissionsActivity : AppCompatActivity() {
             if (!granted) {
                 Toast.makeText(this, "Calendar permission denied — daily summary won't work.", Toast.LENGTH_LONG).show()
             }
+            refreshButtonColors()
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_permissions)
 
-        findViewById<Button>(R.id.btnNotifAccess).setOnClickListener {
+        findViewById<MaterialButton>(R.id.btnNotifAccess).setOnClickListener {
             startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
         }
 
-        findViewById<Button>(R.id.btnOverlayPermission).setOnClickListener {
+        findViewById<MaterialButton>(R.id.btnOverlayPermission).setOnClickListener {
             if (!Settings.canDrawOverlays(this)) {
                 startActivity(
                     Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName"))
@@ -41,11 +43,11 @@ class PermissionsActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<Button>(R.id.btnCalendarAccess).setOnClickListener {
+        findViewById<MaterialButton>(R.id.btnCalendarAccess).setOnClickListener {
             calendarPermissionLauncher.launch(Manifest.permission.READ_CALENDAR)
         }
 
-        findViewById<Button>(R.id.btnBatteryOptimization).setOnClickListener {
+        findViewById<MaterialButton>(R.id.btnBatteryOptimization).setOnClickListener {
             val powerManager = getSystemService(POWER_SERVICE) as PowerManager
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
                 !powerManager.isIgnoringBatteryOptimizations(packageName)) {
@@ -58,7 +60,7 @@ class PermissionsActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<Button>(R.id.btnAutostart).setOnClickListener {
+        findViewById<MaterialButton>(R.id.btnAutostart).setOnClickListener {
             try {
                 val intent = Intent().apply {
                     component = ComponentName(
@@ -79,5 +81,23 @@ class PermissionsActivity : AppCompatActivity() {
                 startActivity(fallback)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshButtonColors()
+    }
+
+    private fun setButtonGranted(button: MaterialButton, granted: Boolean) {
+        val color = if (granted) 0xFF4be8ff.toInt() else 0xFFff3b5c.toInt()
+        button.setTextColor(color)
+        button.strokeColor = ColorStateList.valueOf(color)
+    }
+
+    private fun refreshButtonColors() {
+        setButtonGranted(findViewById(R.id.btnNotifAccess), PermissionStatus.hasNotificationAccess(this))
+        setButtonGranted(findViewById(R.id.btnOverlayPermission), PermissionStatus.hasOverlayPermission(this))
+        setButtonGranted(findViewById(R.id.btnCalendarAccess), PermissionStatus.hasCalendarPermission(this))
+        setButtonGranted(findViewById(R.id.btnBatteryOptimization), PermissionStatus.hasBatteryExemption(this))
     }
 }

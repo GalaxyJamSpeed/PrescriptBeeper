@@ -4,8 +4,10 @@ import android.Manifest
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.Switch
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -39,7 +41,6 @@ class MainActivity : AppCompatActivity() {
 
         CalendarScheduler.scheduleDailyCheck(this)
 
-
         findViewById<Button>(R.id.btnOpenConfigurations).setOnClickListener {
             startActivity(Intent(this, ConfigurationsActivity::class.java))
         }
@@ -60,6 +61,14 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, RemindersActivity::class.java))
         }
 
+        findViewById<TextView>(R.id.tvPermissionsMissing).setOnClickListener {
+            startActivity(Intent(this, PermissionsActivity::class.java))
+        }
+
+        findViewById<TextView>(R.id.tvNoAppsWatched).setOnClickListener {
+            startActivity(Intent(this, AppPickerActivity::class.java))
+        }
+
         val prefs = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
         val switchEnabled = findViewById<Switch>(R.id.switchEnabled)
         switchEnabled.isChecked = prefs.getBoolean("prescript_enabled", true)
@@ -71,5 +80,14 @@ class MainActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        findViewById<TextView>(R.id.tvPermissionsMissing).visibility =
+            if (PermissionStatus.allCriticalGranted(this)) View.GONE else View.VISIBLE
+
+        findViewById<TextView>(R.id.tvNoAppsWatched).visibility =
+            if (WatchedAppsConfig.getWatchedApps(this).isEmpty()) View.VISIBLE else View.GONE
     }
 }

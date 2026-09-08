@@ -2,7 +2,6 @@ package com.example.prescriptbeeper
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -51,7 +50,6 @@ class AppPickerActivity : AppCompatActivity() {
             text = "APP CATEGORIES"
             setTextColor(0xFF4be8ff.toInt())
             textSize = 16f
-            setTypeface(typeface, Typeface.BOLD)
             gravity = Gravity.CENTER
             setPadding(0, 0, 0, 16)
         })

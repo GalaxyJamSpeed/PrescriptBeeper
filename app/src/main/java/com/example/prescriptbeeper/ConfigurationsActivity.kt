@@ -98,10 +98,67 @@ class ConfigurationsActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
+        val seekBarBatteryThreshold = findViewById<SeekBar>(R.id.seekBarBatteryThreshold)
+        val tvBatteryThresholdValue = findViewById<TextView>(R.id.tvBatteryThresholdValue)
+        val savedThreshold = prefs.getInt("battery_low_threshold", 20)
+        seekBarBatteryThreshold.progress = savedThreshold - 10
+        tvBatteryThresholdValue.text = "${savedThreshold}%"
+        seekBarBatteryThreshold.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                val percent = progress + 10
+                tvBatteryThresholdValue.text = "${percent}%"
+                prefs.edit().putInt("battery_low_threshold", percent).apply()
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
+
+        val seekBarBatteryRestored = findViewById<SeekBar>(R.id.seekBarBatteryRestored)
+        val tvBatteryRestoredValue = findViewById<TextView>(R.id.tvBatteryRestoredValue)
+        val savedRestoredThreshold = prefs.getInt("battery_restored_threshold", 80)
+        seekBarBatteryRestored.progress = savedRestoredThreshold - 50
+        tvBatteryRestoredValue.text = "${savedRestoredThreshold}%"
+        seekBarBatteryRestored.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                val percent = progress + 50
+                tvBatteryRestoredValue.text = "${percent}%"
+                prefs.edit().putInt("battery_restored_threshold", percent).apply()
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
+
+        val seekBarEarbudsThreshold = findViewById<SeekBar>(R.id.seekBarEarbudsThreshold)
+        val tvEarbudsThresholdValue = findViewById<TextView>(R.id.tvEarbudsThresholdValue)
+        val savedEarbudsThreshold = prefs.getInt("earbuds_low_threshold", 30)
+        seekBarEarbudsThreshold.progress = savedEarbudsThreshold - 10
+        tvEarbudsThresholdValue.text = "${savedEarbudsThreshold}%"
+        seekBarEarbudsThreshold.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                val percent = progress + 10
+                tvEarbudsThresholdValue.text = "${percent}%"
+                prefs.edit().putInt("earbuds_low_threshold", percent).apply()
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
+
         spinnerCategory = findViewById(R.id.spinnerCategory)
         customLinesContainer = findViewById(R.id.customLinesContainer)
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categoryLabels)
+        val adapter = object : ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categoryLabels) {
+            override fun getView(position: Int, convertView: View?, parent: android.view.ViewGroup): View {
+                val view = super.getView(position, convertView, parent) as TextView
+                view.setTextColor(0xFFdff1ff.toInt())
+                return view
+            }
+            override fun getDropDownView(position: Int, convertView: View?, parent: android.view.ViewGroup): View {
+                val view = super.getDropDownView(position, convertView, parent) as TextView
+                view.setTextColor(0xFFdff1ff.toInt())
+                view.setBackgroundColor(0xFF10181c.toInt())
+                return view
+            }
+        }
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerCategory.adapter = adapter
 
@@ -142,51 +199,6 @@ class ConfigurationsActivity : AppCompatActivity() {
                 Toast.makeText(this, "Line added", Toast.LENGTH_SHORT).show()
             }
         }
-
-        val seekBarBatteryThreshold = findViewById<SeekBar>(R.id.seekBarBatteryThreshold)
-        val tvBatteryThresholdValue = findViewById<TextView>(R.id.tvBatteryThresholdValue)
-        val savedThreshold = prefs.getInt("battery_low_threshold", 20)
-        seekBarBatteryThreshold.progress = savedThreshold - 5
-        tvBatteryThresholdValue.text = "${savedThreshold}%"
-        seekBarBatteryThreshold.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                val percent = progress + 5
-                tvBatteryThresholdValue.text = "${percent}%"
-                prefs.edit().putInt("battery_low_threshold", percent).apply()
-            }
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-        })
-
-        val seekBarBatteryRestored = findViewById<SeekBar>(R.id.seekBarBatteryRestored)
-        val tvBatteryRestoredValue = findViewById<TextView>(R.id.tvBatteryRestoredValue)
-        val savedRestoredThreshold = prefs.getInt("battery_restored_threshold", 80)
-        seekBarBatteryRestored.progress = savedRestoredThreshold - 50
-        tvBatteryRestoredValue.text = "${savedRestoredThreshold}%"
-        seekBarBatteryRestored.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                val percent = progress + 50
-                tvBatteryRestoredValue.text = "${percent}%"
-                prefs.edit().putInt("battery_restored_threshold", percent).apply()
-            }
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-        })
-
-        val seekBarEarbudsThreshold = findViewById<SeekBar>(R.id.seekBarEarbudsThreshold)
-        val tvEarbudsThresholdValue = findViewById<TextView>(R.id.tvEarbudsThresholdValue)
-        val savedEarbudsThreshold = prefs.getInt("earbuds_low_threshold", 30)
-        seekBarEarbudsThreshold.progress = savedEarbudsThreshold - 10
-        tvEarbudsThresholdValue.text = "${savedEarbudsThreshold}%"
-        seekBarEarbudsThreshold.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                val percent = progress + 10
-                tvEarbudsThresholdValue.text = "${percent}%"
-                prefs.edit().putInt("earbuds_low_threshold", percent).apply()
-            }
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-        })
 
         refreshCustomLinesList()
     }
