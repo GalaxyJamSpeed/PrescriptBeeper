@@ -39,16 +39,6 @@
             android:fontFamily="monospace"
             android:layout_marginBottom="32dp" />
 
-        <TextView
-            android:id="@+id/tvPermissionsMissing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="⚠ Permissions Missing"
-            android:textColor="#ff3b5c"
-            android:textSize="11sp"
-            android:fontFamily="monospace"
-            android:visibility="gone"
-            android:layout_marginBottom="20dp" />
 
         <TextView
             android:id="@+id/tvPermissionsMissing"
