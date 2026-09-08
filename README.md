@@ -108,7 +108,7 @@ This project intentionally avoids two "expected" approaches that turned out to b
 This is an unofficial, non-commercial fan project inspired by *Limbus Company*, created by Project Moon. All game-related names, concepts, and imagery referenced belong to their respective owners. PrescriptBeeper is a personal utility app and is not affiliated with or endorsed by Project Moon.
 
 <div align="center">
-  <img width="100" height="100" alt="The_Index_Logo" src="https://github.com/user-attachments/assets/8780b00c-3516-401d-9d29-4dc3f529c4be" />
+  <img width="100" height="100" alt="Index_Icon" src="https://github.com/user-attachments/assets/1adf6ea2-39a6-401f-b8af-c3429aed90d1" />
   <br>
   <em>"_THE INDEX AWAITS YOUR PARTICIPATION._"</em>
 </div>
