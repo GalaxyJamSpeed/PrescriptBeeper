@@ -149,6 +149,7 @@ class ExclusionsActivity : AppCompatActivity() {
         val switch = Switch(this).apply {
             isChecked = pkg in excludedApps
         }
+        SwitchStyler.applyBlueTint(switch)
         switch.setOnCheckedChangeListener { _, isChecked ->
             ExcludedAppsConfig.setExcluded(this@ExclusionsActivity, pkg, isChecked)
             rebuildList()

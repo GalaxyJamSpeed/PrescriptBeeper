@@ -66,11 +66,11 @@ class ConfigurationsActivity : AppCompatActivity() {
         val seekBarDuration = findViewById<SeekBar>(R.id.seekBarDuration)
         val tvDurationValue = findViewById<TextView>(R.id.tvDurationValue)
         val savedDuration = prefs.getInt("popup_duration_seconds", 5)
-        seekBarDuration.progress = if (savedDuration == 0) 16 else savedDuration - 5
+        seekBarDuration.progress = if (savedDuration == 0) 26 else savedDuration - 5
         tvDurationValue.text = if (savedDuration == 0) "Infinite" else "${savedDuration}s"
         seekBarDuration.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (progress == 16) {
+                if (progress == 26) {
                     tvDurationValue.text = "Infinite"
                     prefs.edit().putInt("popup_duration_seconds", 0).apply()
                 } else {
@@ -86,13 +86,18 @@ class ConfigurationsActivity : AppCompatActivity() {
         val seekBarCooldown = findViewById<SeekBar>(R.id.seekBarCooldown)
         val tvCooldownValue = findViewById<TextView>(R.id.tvCooldownValue)
         val savedCooldown = prefs.getInt("app_cooldown_seconds", 20)
-        seekBarCooldown.progress = savedCooldown - 10
-        tvCooldownValue.text = "${savedCooldown}s"
+        seekBarCooldown.progress = if (savedCooldown == 0) 26 else savedCooldown - 5
+        tvCooldownValue.text = if (savedCooldown == 0) "Infinite" else "${savedCooldown}s"
         seekBarCooldown.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                val seconds = progress + 10
-                tvCooldownValue.text = "${seconds}s"
-                prefs.edit().putInt("app_cooldown_seconds", seconds).apply()
+                if (progress == 26) {
+                    tvCooldownValue.text = "Infinite"
+                    prefs.edit().putInt("app_cooldown_seconds", 0).apply()
+                } else {
+                    val seconds = progress + 5
+                    tvCooldownValue.text = "${seconds}s"
+                    prefs.edit().putInt("app_cooldown_seconds", seconds).apply()
+                }
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}

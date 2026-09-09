@@ -37,7 +37,6 @@ class PrescriptOverlayService : Service() {
     private var senderName: String? = null
     private var category: String = "GENERIC"
 
-    private val karmicFortunaThreshold = 25
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -164,7 +163,7 @@ class PrescriptOverlayService : Service() {
         val karmicRow = view.findViewById<LinearLayout>(R.id.karmicRow)
         if (karmicCount > 0) {
             karmicRow.visibility = View.VISIBLE
-            val isFortuna = karmicCount >= karmicFortunaThreshold
+            val isFortuna = karmicCount > completedCount
             val karmicIcon = if (isFortuna) R.drawable.ickarmic2 else R.drawable.ickarmic1
             view.findViewById<ImageView>(R.id.ivKarmicIcon).setImageResource(karmicIcon)
             view.findViewById<TextView>(R.id.tvKarmicCount).text = "$karmicCount"
@@ -274,6 +273,7 @@ class PrescriptOverlayService : Service() {
         val prefs = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
         val newCount = prefs.getInt("karmic_consequences", 0) + 1
         prefs.edit().putInt("karmic_consequences", newCount).apply()
+        WeeklyStats.recordKarmic(applicationContext)
         PrescriptWidgetProvider.updateAll(applicationContext)
     }
 }

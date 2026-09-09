@@ -58,12 +58,12 @@ class WeeklySummaryActivity : AppCompatActivity() {
         }
         dayButton = Button(this).apply {
             text = "Day"
-            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { marginEnd = 6 }
             setOnClickListener { mode = Mode.DAY; anchor = Calendar.getInstance(); refresh() }
         }
         weekButton = Button(this).apply {
             text = "Week"
-            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { marginEnd = 6 }
             setOnClickListener { mode = Mode.WEEK; anchor = Calendar.getInstance(); refresh() }
         }
         monthButton = Button(this).apply {
@@ -85,6 +85,8 @@ class WeeklySummaryActivity : AppCompatActivity() {
         }
         navRow.addView(Button(this).apply {
             text = "<"
+            setBackgroundResource(R.drawable.bg_widget_dark)
+            setTextColor(0xFF4be8ff.toInt())
             setOnClickListener { shift(-1); refresh() }
         })
         periodLabel = TextView(this).apply {
@@ -96,6 +98,8 @@ class WeeklySummaryActivity : AppCompatActivity() {
         navRow.addView(periodLabel)
         navRow.addView(Button(this).apply {
             text = ">"
+            setBackgroundResource(R.drawable.bg_widget_dark)
+            setTextColor(0xFF4be8ff.toInt())
             setOnClickListener { shift(1); refresh() }
         })
         root.addView(navRow)
@@ -188,9 +192,9 @@ class WeeklySummaryActivity : AppCompatActivity() {
     }
 
     private fun refresh() {
-        dayButton.isEnabled = mode != Mode.DAY
-        weekButton.isEnabled = mode != Mode.WEEK
-        monthButton.isEnabled = mode != Mode.MONTH
+        styleTabButton(dayButton, mode == Mode.DAY)
+        styleTabButton(weekButton, mode == Mode.WEEK)
+        styleTabButton(monthButton, mode == Mode.MONTH)
 
         val (startKey, endKey) = computeRange()
         val summary = WeeklyStats.getSummaryForRange(this, startKey, endKey)
@@ -212,31 +216,54 @@ class WeeklySummaryActivity : AppCompatActivity() {
         chart.setData(chartLabels, weekendFlags)
 
         statsContainer.removeAllViews()
-        fun statCard(label: String, value: String) {
-            val card = LinearLayout(this).apply {
+
+        fun buildStatCard(label: String, value: String, accentColor: Int = 0xFF7ee8a3.toInt(), valueColor: Int = 0xFFdff1ff.toInt()): LinearLayout {
+            return LinearLayout(this).apply {
                 orientation = LinearLayout.VERTICAL
                 setBackgroundColor(0xFF10181c.toInt())
                 setPadding(24, 20, 24, 20)
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply { bottomMargin = 12 }
+                addView(TextView(this@WeeklySummaryActivity).apply {
+                    text = label
+                    setTextColor(accentColor)
+                    textSize = 11f
+                    setTypeface(typeface, Typeface.BOLD)
+                })
+                addView(TextView(this@WeeklySummaryActivity).apply {
+                    text = value
+                    setTextColor(valueColor)
+                    textSize = 15f
+                    setPadding(0, 6, 0, 0)
+                })
             }
-            card.addView(TextView(this).apply {
-                text = label
-                setTextColor(0xFF7ee8a3.toInt())
-                textSize = 11f
-                setTypeface(typeface, Typeface.BOLD)
-            })
-            card.addView(TextView(this).apply {
-                text = value
-                setTextColor(0xFFdff1ff.toInt())
-                textSize = 15f
-                setPadding(0, 6, 0, 0)
-            })
+        }
+
+        fun statCard(label: String, value: String) {
+            val card = buildStatCard(label, value)
+            card.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { bottomMargin = 12 }
             statsContainer.addView(card)
         }
 
-        statCard("TOTAL COMPLETED", "${summary.total}")
+        val karmicTotal = WeeklyStats.getKarmicTotalForRange(this, startKey, endKey)
+
+        val topRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { bottomMargin = 12 }
+        }
+
+        val completedCard = buildStatCard("TOTAL COMPLETED", "${summary.total}").apply {
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { marginEnd = 8 }
+        }
+        val dismissedCard = buildStatCard("TOTAL DISMISSED", "$karmicTotal", accentColor = 0xFFff3b5c.toInt()).apply {
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        }
+        topRow.addView(completedCard)
+        topRow.addView(dismissedCard)
+        statsContainer.addView(topRow)
+
         if (mode != Mode.DAY) {
             statCard("BUSIEST DAY", "${summary.busiestDayLabel} (${summary.busiestDayCount})")
         }
@@ -279,5 +306,11 @@ class WeeklySummaryActivity : AppCompatActivity() {
                 layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f)
             })
         }
+    }
+
+    private fun styleTabButton(button: Button, isSelected: Boolean) {
+        button.setBackgroundResource(R.drawable.bg_widget_dark)
+        button.setTextColor(if (isSelected) 0xFF4be8ff.toInt() else 0xFF5c6975.toInt())
+        button.alpha = if (isSelected) 1f else 0.6f
     }
 }

@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import android.content.res.ColorStateList
 
 class MainActivity : AppCompatActivity() {
 
@@ -70,7 +71,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         val prefs = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
+
         val switchEnabled = findViewById<Switch>(R.id.switchEnabled)
+        SwitchStyler.applyBlueTint(switchEnabled)
         switchEnabled.isChecked = prefs.getBoolean("prescript_enabled", true)
         switchEnabled.setOnCheckedChangeListener { _, isChecked ->
             prefs.edit().putBoolean("prescript_enabled", isChecked).apply()

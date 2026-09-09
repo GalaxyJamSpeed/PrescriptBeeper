@@ -173,7 +173,12 @@ class NotificationForwarderService : NotificationListenerService() {
         val now = SystemClock.elapsedRealtime()
         val lastFired = lastFiredPerPackage[sbn.packageName]
 
-        if (lastFired == null || now - lastFired >= cooldownSeconds * 1000L) {
+        val cooldownPassed = when {
+            cooldownSeconds == 0 -> lastFired == null
+            else -> lastFired == null || now - lastFired >= cooldownSeconds * 1000L
+        }
+
+        if (cooldownPassed) {
             lastFiredPerPackage[sbn.packageName] = now
             lastFiredKeyPerPackage[sbn.packageName] = sbn.key
 

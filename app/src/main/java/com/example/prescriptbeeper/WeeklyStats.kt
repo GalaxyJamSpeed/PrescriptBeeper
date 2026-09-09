@@ -183,4 +183,51 @@ object WeeklyStats {
         val raw = map.entries.joinToString(ENTRY_SEPARATOR) { "${it.key}$KV_SEPARATOR${it.value}" }
         prefs.edit().putString(STATS_KEY, raw).apply()
     }
+
+    private const val KARMIC_STATS_KEY = "karmic_daily_stats"
+
+    fun recordKarmic(context: Context) {
+        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val today = dateFormat.format(Date())
+        val map = loadKarmicMap(prefs).toMutableMap()
+        map[today] = (map[today] ?: 0) + 1
+        pruneOldKarmicEntries(map)
+        saveKarmicMap(prefs, map)
+    }
+
+    fun getKarmicTotalForRange(context: Context, startKey: String, endKeyInclusive: String): Int {
+        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val map = loadKarmicMap(prefs)
+        var total = 0
+        for ((date, count) in map) {
+            if (date < startKey || date > endKeyInclusive) continue
+            total += count
+        }
+        return total
+    }
+
+    private fun pruneOldKarmicEntries(map: MutableMap<String, Int>) {
+        val cutoff = cutoffDate()
+        val iterator = map.entries.iterator()
+        while (iterator.hasNext()) {
+            if (iterator.next().key < cutoff) iterator.remove()
+        }
+    }
+
+    private fun loadKarmicMap(prefs: SharedPreferences): Map<String, Int> {
+        val raw = prefs.getString(KARMIC_STATS_KEY, "") ?: ""
+        if (raw.isBlank()) return emptyMap()
+        return raw.split(ENTRY_SEPARATOR).mapNotNull { entry ->
+            val idx = entry.lastIndexOf(KV_SEPARATOR)
+            if (idx == -1) return@mapNotNull null
+            val key = entry.substring(0, idx)
+            val value = entry.substring(idx + 1).toIntOrNull() ?: return@mapNotNull null
+            key to value
+        }.toMap()
+    }
+
+    private fun saveKarmicMap(prefs: SharedPreferences, map: Map<String, Int>) {
+        val raw = map.entries.joinToString(ENTRY_SEPARATOR) { "${it.key}$KV_SEPARATOR${it.value}" }
+        prefs.edit().putString(KARMIC_STATS_KEY, raw).apply()
+    }
 }

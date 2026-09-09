@@ -51,7 +51,7 @@ class PrescriptWidgetProvider : AppWidgetProvider() {
             if (karmicCount > 0) {
                 views.setViewVisibility(R.id.widgetKarmicRow, android.view.View.VISIBLE)
                 views.setTextViewText(R.id.widgetKarmicCount, "$karmicCount")
-                views.setImageViewResource(R.id.widgetKarmicIcon, if (karmicCount >= 5) R.drawable.ickarmic2 else R.drawable.ickarmic1)
+                views.setImageViewResource(R.id.widgetKarmicIcon, if (karmicCount > count) R.drawable.ickarmic2 else R.drawable.ickarmic1)
             } else {
                 views.setViewVisibility(R.id.widgetKarmicRow, android.view.View.GONE)
             }

@@ -38,6 +38,8 @@ class RemindersActivity : AppCompatActivity() {
 
         val timeButton = Button(this).apply {
             text = "Set Time: 08:00"
+            setBackgroundResource(R.drawable.bg_widget_dark)
+            setTextColor(0xFF4be8ff.toInt())
             setOnClickListener {
                 TimePickerDialog(this@RemindersActivity, { _, hour, minute ->
                     selectedHour = hour
@@ -61,6 +63,8 @@ class RemindersActivity : AppCompatActivity() {
 
         root.addView(Button(this).apply {
             text = "Add Reminder"
+            setBackgroundResource(R.drawable.bg_widget_dark)
+            setTextColor(0xFF4be8ff.toInt())
             setOnClickListener {
                 val text = textInput.text.toString().trim()
                 if (text.isNotEmpty()) {
@@ -131,18 +135,22 @@ class RemindersActivity : AppCompatActivity() {
                 layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
             })
 
-            topRow.addView(Switch(this).apply {
+            val reminderSwitch = Switch(this).apply {
                 isChecked = reminder.enabled
-                setOnCheckedChangeListener { _, isChecked ->
-                    ReminderConfig.setEnabled(this@RemindersActivity, reminder.id, isChecked)
-                    if (isChecked) ReminderScheduler.schedule(this@RemindersActivity, reminder.copy(enabled = true))
-                    else ReminderScheduler.cancel(this@RemindersActivity, reminder)
-                }
-            })
+            }
+            SwitchStyler.applyBlueTint(reminderSwitch)
+            reminderSwitch.setOnCheckedChangeListener { _, isChecked ->
+                ReminderConfig.setEnabled(this@RemindersActivity, reminder.id, isChecked)
+                if (isChecked) ReminderScheduler.schedule(this@RemindersActivity, reminder.copy(enabled = true))
+                else ReminderScheduler.cancel(this@RemindersActivity, reminder)
+            }
+            topRow.addView(reminderSwitch)
 
             topRow.addView(Button(this).apply {
                 text = "Delete"
                 textSize = 10f
+                setBackgroundResource(R.drawable.bg_widget_dark)
+                setTextColor(0xFFff3b5c.toInt())
                 setOnClickListener {
                     ReminderScheduler.cancel(this@RemindersActivity, reminder)
                     ReminderConfig.deleteReminder(this@RemindersActivity, reminder.id)
