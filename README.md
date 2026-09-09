@@ -11,6 +11,7 @@
 ![Min SDK](https://img.shields.io/badge/Min%20SDK-26-blue)
 ![GitHub release](https://img.shields.io/github/v/release/GalaxyJammed/PrescriptBeeper?logo=github&label=GitHub%20release)
 ![License](https://img.shields.io/badge/License-Personal%20Project-lightgrey)
+![Project Status](https://img.shields.io/badge/Project%20Status-Unfinished-blue)
 
 </div>
 
