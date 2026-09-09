@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import android.content.Intent
 
 class WeeklySummaryActivity : AppCompatActivity() {
 
@@ -37,7 +38,7 @@ class WeeklySummaryActivity : AppCompatActivity() {
 
         root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setBackgroundColor(0xFF020505.toInt())
+            setBackgroundResource(R.drawable.bg_app_wallpaper)
             setPadding(48, (48 + 32 * density).toInt(), 48, 48)
         }
 
@@ -49,6 +50,17 @@ class WeeklySummaryActivity : AppCompatActivity() {
             gravity = Gravity.CENTER
             setPadding(0, 0, 0, 24)
         })
+
+        root.addView(Button(this).apply {
+            text = "All-Time Stats"
+            setBackgroundResource(R.drawable.bg_widget_dark)
+            setTextColor(0xFF4be8ff.toInt())
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { bottomMargin = 20 }
+            setOnClickListener { startActivity(Intent(this@WeeklySummaryActivity, AllTimeStatsActivity::class.java)) }
+        })
+
 
         val modeRow = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL

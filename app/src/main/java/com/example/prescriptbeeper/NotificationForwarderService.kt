@@ -173,6 +173,9 @@ class NotificationForwarderService : NotificationListenerService() {
         val currentForeground = ForegroundAppDetector.getCurrentForegroundApp(applicationContext)
         if (currentForeground != null && currentForeground in dndApps) return
 
+        val skipSameApp = prefs.getBoolean("skip_popup_if_same_app", false)
+        if (skipSameApp && currentForeground == sbn.packageName) return
+
         if (lastFiredKeyPerPackage[sbn.packageName] == sbn.key) return
 
         val cooldownSeconds = prefs.getInt("app_cooldown_seconds", 20)

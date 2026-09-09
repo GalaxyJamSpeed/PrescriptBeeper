@@ -43,7 +43,7 @@ class FeatureTogglesActivity : AppCompatActivity() {
         val scroll = ScrollView(this).apply {
             fitsSystemWindows = true
             setPadding(0, (32 * resources.displayMetrics.density).toInt(), 0, 0)
-            setBackgroundColor(0xFF020505.toInt())
+            setBackgroundResource(R.drawable.bg_app_wallpaper)
         }
         scroll.addView(root)
         setContentView(scroll)

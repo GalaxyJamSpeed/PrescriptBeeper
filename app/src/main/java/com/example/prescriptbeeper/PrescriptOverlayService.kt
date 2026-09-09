@@ -156,7 +156,7 @@ class PrescriptOverlayService : Service() {
         val prefs = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
 
         val completedCount = prefs.getInt("prescripts_completed", 0)
-        val (stage, stageIcon) = stageFor(completedCount)
+        val (stage, stageIcon) = computeStage(prefs)
         view.findViewById<TextView>(R.id.tvFooterCount).text = "$completedCount prescripts completed — Stage $stage"
         view.findViewById<ImageView>(R.id.ivStageIcon).setImageResource(stageIcon)
 
@@ -253,12 +253,32 @@ class PrescriptOverlayService : Service() {
         }
     }
 
-    private fun stageFor(count: Int): Pair<Int, Int> {
-        return when {
-            count >= 20 -> 3 to R.drawable.icunlock3
-            count >= 10 -> 2 to R.drawable.icunlock2
-            else -> 1 to R.drawable.icunlock1
+    private fun computeStage(prefs: android.content.SharedPreferences): Pair<Int, Int> {
+        val completed = prefs.getInt("prescripts_completed", 0)
+        val karmic = prefs.getInt("karmic_consequences", 0)
+        val totalInteractions = completed + karmic
+        val minSample = 5
+
+        val ratio = if (totalInteractions == 0) 0f else completed.toFloat() / totalInteractions
+        val currentStage = prefs.getInt("highest_stage_today", 1)
+
+        var newStage = currentStage
+        if (currentStage == 1 && totalInteractions >= minSample && ratio >= 0.5f) {
+            newStage = 2
+        } else if (currentStage == 2 && totalInteractions >= minSample && ratio >= 0.75f) {
+            newStage = 3
         }
+
+        if (newStage != currentStage) {
+            prefs.edit().putInt("highest_stage_today", newStage).apply()
+        }
+
+        val icon = when (newStage) {
+            3 -> R.drawable.icunlock3
+            2 -> R.drawable.icunlock2
+            else -> R.drawable.icunlock1
+        }
+        return newStage to icon
     }
 
     private fun resetCounterIfNewDay() {
@@ -270,6 +290,7 @@ class PrescriptOverlayService : Service() {
             prefs.edit()
                 .putInt("prescripts_completed", 0)
                 .putInt("karmic_consequences", 0)
+                .putInt("highest_stage_today", 1)
                 .putString("last_reset_date", today)
                 .apply()
             PrescriptWidgetProvider.updateAll(this)

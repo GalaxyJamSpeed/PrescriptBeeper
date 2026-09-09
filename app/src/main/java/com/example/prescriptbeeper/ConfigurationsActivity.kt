@@ -62,6 +62,13 @@ class ConfigurationsActivity : AppCompatActivity() {
             prefs.edit().putBoolean("mute_beep_screen_off", isChecked).apply()
         }
 
+        val switchSkipSameApp = findViewById<Switch>(R.id.switchSkipSameApp)
+        SwitchStyler.applyBlueTint(switchSkipSameApp)
+        switchSkipSameApp.isChecked = prefs.getBoolean("skip_popup_if_same_app", false)
+        switchSkipSameApp.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("skip_popup_if_same_app", isChecked).apply()
+        }
+
         val seekBarVolume = findViewById<SeekBar>(R.id.seekBarVolume)
         val tvVolumeValue = findViewById<TextView>(R.id.tvVolumeValue)
         val savedVolume = (prefs.getFloat("beep_volume", 1.0f) * 100).toInt()

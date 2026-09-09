@@ -60,6 +60,8 @@
         <receiver android:name=".ReminderAlarmReceiver" android:exported="false" />
         <activity android:name=".AboutActivity" android:exported="false" />
         <activity android:name=".FeatureTogglesActivity" android:exported="false" />
+        <activity android:name=".BackupRestoreActivity" android:exported="false" />
+        <activity android:name=".AllTimeStatsActivity" android:exported="false" />
 
         <receiver
             android:name=".BatteryReceiver"

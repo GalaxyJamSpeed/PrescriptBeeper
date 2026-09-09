@@ -34,13 +34,13 @@ class PrescriptWidgetProvider : AppWidgetProvider() {
             val today = SimpleDateFormat("yyyyMMdd", Locale.US).format(Date())
             val lastDate = prefs.getString("last_reset_date", null)
             val count = if (lastDate != today) 0 else prefs.getInt("prescripts_completed", 0)
+            val stage = if (lastDate != today) 1 else prefs.getInt("highest_stage_today", 1)
 
-            val (stage, icon) = when {
-                count >= 30 -> 3 to R.drawable.icunlock3
-                count >= 15 -> 2 to R.drawable.icunlock2
-                else -> 1 to R.drawable.icunlock1
+            val icon = when (stage) {
+                3 -> R.drawable.icunlock3
+                2 -> R.drawable.icunlock2
+                else -> R.drawable.icunlock1
             }
-
 
             val views = RemoteViews(context.packageName, R.layout.widget_prescript)
             views.setTextViewText(R.id.widgetCountText, "$count")

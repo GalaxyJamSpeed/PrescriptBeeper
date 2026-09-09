@@ -28,6 +28,16 @@ object WeeklyStats {
         val dailyTotals: List<Pair<String, Int>>
     )
 
+    data class AllTimeSummary(
+        val totalCompleted: Int,
+        val totalDismissed: Int,
+        val busiestDayLabel: String,
+        val busiestDayCount: Int,
+        val topCategoryLabel: String,
+        val topCategoryCount: Int,
+        val byCategory: Map<String, Int>
+    )
+
     fun weekdayInitial(dateKey: String): String {
         return try {
             when (parseKey(dateKey).get(Calendar.DAY_OF_WEEK)) {
@@ -53,6 +63,8 @@ object WeeklyStats {
 
         pruneOldEntries(map)
         saveMap(prefs, map)
+
+        prefs.edit().putInt("lifetime_completed_total", prefs.getInt("lifetime_completed_total", 0) + 1).apply()
     }
 
     fun getSummaryForRange(context: Context, startKey: String, endKeyInclusive: String): RangeSummary {
@@ -193,6 +205,8 @@ object WeeklyStats {
         map[today] = (map[today] ?: 0) + 1
         pruneOldKarmicEntries(map)
         saveKarmicMap(prefs, map)
+
+        prefs.edit().putInt("lifetime_karmic_total", prefs.getInt("lifetime_karmic_total", 0) + 1).apply()
     }
 
     fun getKarmicTotalForRange(context: Context, startKey: String, endKeyInclusive: String): Int {
@@ -229,5 +243,21 @@ object WeeklyStats {
     private fun saveKarmicMap(prefs: SharedPreferences, map: Map<String, Int>) {
         val raw = map.entries.joinToString(ENTRY_SEPARATOR) { "${it.key}$KV_SEPARATOR${it.value}" }
         prefs.edit().putString(KARMIC_STATS_KEY, raw).apply()
+    }
+
+    fun getAllTimeSummary(context: Context): AllTimeSummary {
+        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val todayKey = dateFormat.format(Date())
+        val recent = getSummaryForRange(context, cutoffDate(), todayKey)
+
+        return AllTimeSummary(
+            totalCompleted = prefs.getInt("lifetime_completed_total", 0),
+            totalDismissed = prefs.getInt("lifetime_karmic_total", 0),
+            busiestDayLabel = recent.busiestDayLabel,
+            busiestDayCount = recent.busiestDayCount,
+            topCategoryLabel = recent.topCategoryLabel,
+            topCategoryCount = recent.topCategoryCount,
+            byCategory = recent.byCategory
+        )
     }
 }

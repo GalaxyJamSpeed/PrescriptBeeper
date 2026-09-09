@@ -70,6 +70,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, AppPickerActivity::class.java))
         }
 
+        findViewById<Button>(R.id.btnOpenBackupRestore).setOnClickListener {
+            startActivity(Intent(this, BackupRestoreActivity::class.java))
+        }
+
         val prefs = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
 
         val switchEnabled = findViewById<Switch>(R.id.switchEnabled)

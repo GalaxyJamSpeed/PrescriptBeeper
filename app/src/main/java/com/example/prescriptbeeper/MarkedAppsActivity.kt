@@ -24,7 +24,7 @@ class MarkedAppsActivity : AppCompatActivity() {
 
         val root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setBackgroundColor(0xFF020505.toInt())
+            setBackgroundResource(R.drawable.bg_app_wallpaper)
             setPadding(48, 48, 48, 48)
         }
 
