@@ -63,6 +63,8 @@ This started as a first-ever Kotlin project, built entirely feature-by-feature â
 - Editable prescript line pools per category - add or remove your own custom lines anytime
 - Adjustable volume, popup duration, per-app cooldown, and battery thresholds
 - A single switch to pause the entire system without uninstalling anything
+- Enable/Disable features you don't like through the "Configurations" menu
+- Mute the beeping sound when the screen is off
 
 ---
 
