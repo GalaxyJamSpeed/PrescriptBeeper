@@ -59,6 +59,7 @@
 
         <activity android:name=".RemindersActivity" android:exported="false" />
         <receiver android:name=".ReminderAlarmReceiver" android:exported="false" />
+        <activity android:name=".AboutActivity" android:exported="false" />
 
         <receiver
             android:name=".BatteryReceiver"

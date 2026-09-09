@@ -29,6 +29,15 @@
         android:id="@+id/btnOpenTests"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tests" />
+        android:text="Tests"
+        android:layout_marginBottom="16dp" />
+
+
+
+    <Button
+        android:id="@+id/btnOpenAbout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="About" />
 
 </LinearLayout>

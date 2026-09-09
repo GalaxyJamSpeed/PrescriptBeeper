@@ -17,5 +17,9 @@ class SetupActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnOpenTests).setOnClickListener {
             startActivity(Intent(this, TestsActivity::class.java))
         }
+
+        findViewById<Button>(R.id.btnOpenAbout).setOnClickListener {
+            startActivity(Intent(this, AboutActivity::class.java))
+        }
     }
 }
