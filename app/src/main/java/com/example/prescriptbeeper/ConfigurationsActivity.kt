@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
+import android.widget.Switch
 
 class ConfigurationsActivity : AppCompatActivity() {
 
@@ -38,6 +39,7 @@ class ConfigurationsActivity : AppCompatActivity() {
         setupCollapsible(findViewById(R.id.headerAudio), findViewById(R.id.audioContainer), "AUDIO")
         setupCollapsible(findViewById(R.id.headerTiming), findViewById(R.id.timingContainer), "TIMING")
         setupCollapsible(findViewById(R.id.headerThresholds), findViewById(R.id.thresholdsContainer), "THRESHOLDS")
+        setupCollapsible(findViewById(R.id.headerOther), findViewById(R.id.otherContainer), "OTHER")
 
         findViewById<Button>(R.id.btnAppCategories).setOnClickListener {
             startActivity(Intent(this, AppPickerActivity::class.java))
@@ -52,6 +54,13 @@ class ConfigurationsActivity : AppCompatActivity() {
         }
 
         val prefs = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
+
+        val switchMuteScreenOff = findViewById<Switch>(R.id.switchMuteScreenOff)
+        SwitchStyler.applyBlueTint(switchMuteScreenOff)
+        switchMuteScreenOff.isChecked = prefs.getBoolean("mute_beep_screen_off", false)
+        switchMuteScreenOff.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("mute_beep_screen_off", isChecked).apply()
+        }
 
         val seekBarVolume = findViewById<SeekBar>(R.id.seekBarVolume)
         val tvVolumeValue = findViewById<TextView>(R.id.tvVolumeValue)

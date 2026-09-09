@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import android.widget.LinearLayout
+import android.os.PowerManager
 
 class PrescriptOverlayService : Service() {
 
@@ -204,8 +205,14 @@ class PrescriptOverlayService : Service() {
 
     private fun playBeep() {
         val prefs = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
-        val volume = prefs.getFloat("beep_volume", 1.0f)
+        val muteWhenScreenOff = prefs.getBoolean("mute_beep_screen_off", false)
 
+        if (muteWhenScreenOff) {
+            val powerManager = getSystemService(POWER_SERVICE) as PowerManager
+            if (!powerManager.isInteractive) return
+        }
+
+        val volume = prefs.getFloat("beep_volume", 1.0f)
         val mediaPlayer = MediaPlayer.create(this, R.raw.prescript_1)
         mediaPlayer?.setVolume(volume, volume)
         mediaPlayer?.setOnCompletionListener { it.release() }
