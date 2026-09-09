@@ -13,20 +13,24 @@ object PrescriptLines {
     private val defaultLines = mapOf(
         "COMMUNICATION" to listOf(
             "A VOICE REACHES OUT. ANSWER OR LET IT FADE.",
-            "SOMEONE CALLED. THEY WERE NOT HEARD.",
-            "THE CHORUS GROWS LOUD. SILENCE IT OR JOIN IT."
+            "SOMEONE CALLED. LET THEM BE HEARD.",
+            "THE CHORUS GROWS LOUD. SILENCE IT OR JOIN IT.",
+            "DELIVER A MESSAGE TO THE SENDER"
         ),
         "BATTERY_LOW" to listOf(
             "THE VESSEL WEAKENS.",
-            "STRENGTH FADES. SEEK A SOURCE."
+            "STRENGTH FADES. SEEK A SOURCE.",
+            "ENWRAP THE DEVICE IN LIGHT."
         ),
         "BATTERY_OK" to listOf(
-            "STRENGTH RESTORED."
+            "STRENGTH RESTORED.",
+            "THE SEED OF LIGHT HAS BEEN RETURNED.",
+            "RENDER THE DEVICE FULL."
         ),
         "EARBUDS_LOW" to listOf(
             "THE COMPANION'S STRENGTH FADES.",
             "THE COMPANION GROWS FAINT.",
-            "A SILENCE APPROACHES THE COMPANION."
+            "A BLACK SILENCE APPROACHES THE COMPANION."
         ),
         "CALENDAR" to listOf(
             "A GATHERING AWAITS YOU TODAY.",

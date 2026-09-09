@@ -47,6 +47,10 @@ class ConfigurationsActivity : AppCompatActivity() {
             startActivity(Intent(this, ExclusionsActivity::class.java))
         }
 
+        findViewById<Button>(R.id.btnFeatureToggles).setOnClickListener {
+            startActivity(Intent(this, FeatureTogglesActivity::class.java))
+        }
+
         val prefs = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
 
         val seekBarVolume = findViewById<SeekBar>(R.id.seekBarVolume)
@@ -245,6 +249,8 @@ class ConfigurationsActivity : AppCompatActivity() {
             row.addView(Button(this).apply {
                 text = "Delete"
                 textSize = 10f
+                setBackgroundResource(R.drawable.bg_widget_dark)
+                setTextColor(0xFFff3b5c.toInt())
                 setOnClickListener {
                     PrescriptLines.removeCustomLine(this@ConfigurationsActivity, category, line)
                     refreshCustomLinesList()

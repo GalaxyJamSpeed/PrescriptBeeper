@@ -34,6 +34,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Exclusions"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnFeatureToggles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enable/Disable Features"
             android:layout_marginBottom="32dp" />
 
         <TextView
@@ -308,18 +315,18 @@
             android:text="Add Line"
             android:layout_marginBottom="24dp" />
 
-        <Button
-            android:id="@+id/btnRemoveDefaults"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Remove Default Lines"
-            android:layout_marginBottom="16dp" />
-
         <LinearLayout
             android:id="@+id/customLinesContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
+
+        <Button
+            android:id="@+id/btnRemoveDefaults"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Remove Default Lines"
+            android:layout_marginTop="8dp" />
 
     </LinearLayout>
 

@@ -34,7 +34,7 @@ class AboutActivity : AppCompatActivity() {
         addSection(
             "APP INFO",
             "PrescriptBeeper is a fan-made notification system inspired by the Index's Prescript " +
-                    "Beeper from Limbus Company. It turns real phone events — texts, calls, calendar entries, " +
+                    "Beeper from Limbus Company. It turns real phone events - texts, calls, calendar entries, " +
                     "low battery, low earbuds battery - into stylized full-screen \"Prescripts,\" styled after " +
                     "the in-universe device's cyan-on-black display.\n\nThis is an unofficial, non-commercial " +
                     "fan project. All game-related names and concepts belong to Project Moon."
@@ -46,7 +46,7 @@ class AboutActivity : AppCompatActivity() {
                     "it. Accept opens the source app (if there is one) and counts toward your daily total. " +
                     "Dismiss, or letting the countdown run out, counts as a Karmic Consequence instead.\n\n" +
                     "Each category (Messages/Calls, Battery, Earbuds, Calendar, Custom) pulls from its own pool " +
-                    "of lines — a mix of built-in flavor text and anything you've added yourself in " +
+                    "of lines - a mix of built-in flavor text and anything you've added yourself in " +
                     "Configurations."
         )
 
@@ -67,7 +67,7 @@ class AboutActivity : AppCompatActivity() {
 
         addSection(
             "UNLOCK STAGE",
-            "Completing Prescripts (by pressing Accept) raises your Stage for the day (Stage 1 - 1/Stage 2 - 15/Stage 3 - 30) - a simple " +
+            "Completing Prescripts (by pressing Accept) raises your Stage for the day (Stage 1 = 1/Stage 2 = 15/Stage 3 = 30) - a simple " +
                     "visual sense of progress shown in the popup's footer and on the widget. Both this and " +
                     "your Karmic Consequence count reset automatically at midnight."
         )

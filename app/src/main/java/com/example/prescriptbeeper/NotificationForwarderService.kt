@@ -74,16 +74,20 @@ class NotificationForwarderService : NotificationListenerService() {
 
             if (percent <= threshold && !alreadyAlerted) {
                 prefs.edit().putBoolean("phone_battery_alerted", true).apply()
-                PrescriptTrigger.fire(
-                    applicationContext, "BATTERY_LOW",
-                    overrideText = "${PrescriptLines.getLine(applicationContext, "BATTERY_LOW")} ($percent%)"
-                )
+                if (FeatureToggles.isBatteryLowEnabled(applicationContext)) {
+                    PrescriptTrigger.fire(
+                        applicationContext, "BATTERY_LOW",
+                        overrideText = "${PrescriptLines.getLine(applicationContext, "BATTERY_LOW")} ($percent%)"
+                    )
+                }
             } else if (percent >= restoredThreshold && alreadyAlerted) {
                 prefs.edit().putBoolean("phone_battery_alerted", false).apply()
-                PrescriptTrigger.fire(
-                    applicationContext, "BATTERY_OK",
-                    overrideText = "${PrescriptLines.getLine(applicationContext, "BATTERY_OK")} ($percent%)"
-                )
+                if (FeatureToggles.isBatteryRestoredEnabled(applicationContext)) {
+                    PrescriptTrigger.fire(
+                        applicationContext, "BATTERY_OK",
+                        overrideText = "${PrescriptLines.getLine(applicationContext, "BATTERY_OK")} ($percent%)"
+                    )
+                }
             }
         }
     }
@@ -96,10 +100,12 @@ class NotificationForwarderService : NotificationListenerService() {
         if (level < threshold && deviceAddress !in alertedDevices) {
             alertedDevices.add(deviceAddress)
             prefs.edit().putStringSet("earbuds_alerted_devices", alertedDevices).apply()
-            PrescriptTrigger.fire(
-                applicationContext, "EARBUDS_LOW",
-                overrideText = "${PrescriptLines.getLine(applicationContext, "EARBUDS_LOW")} ($deviceName, $level%)"
-            )
+            if (FeatureToggles.isEarbudsLowEnabled(applicationContext)) {
+                PrescriptTrigger.fire(
+                    applicationContext, "EARBUDS_LOW",
+                    overrideText = "${PrescriptLines.getLine(applicationContext, "EARBUDS_LOW")} ($deviceName, $level%)"
+                )
+            }
         } else if (level >= threshold && deviceAddress in alertedDevices) {
             alertedDevices.remove(deviceAddress)
             prefs.edit().putStringSet("earbuds_alerted_devices", alertedDevices).apply()
