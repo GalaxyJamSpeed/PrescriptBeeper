@@ -9,7 +9,9 @@
 ![Kotlin](https://img.shields.io/badge/Kotlin-100%25-7F52FF?logo=kotlin&logoColor=white)
 ![Platform](https://img.shields.io/badge/Platform-Android-3DDC84?logo=android&logoColor=white)
 ![Min SDK](https://img.shields.io/badge/Min%20SDK-26-blue)
-![License](https://img.shields.io/badge/License-Personal%20Project-lightgrey)
+![GitHub release](https://img.shields.io/github/v/release/GalaxyJammed/PrescriptBeeper?logo=github&label=GitHub%20release)
+![License](https://img.shields.io/badge/License-Personal%20Project-lightgrey?logo=Unlicense)
+![Project Status](https://img.shields.io/badge/Project%20Status-Unfinished-blue)
 
 </div>
 
@@ -63,6 +65,8 @@ This started as a first-ever Kotlin project, built entirely feature-by-feature â
 - Editable prescript line pools per category - add or remove your own custom lines anytime
 - Adjustable volume, popup duration, per-app cooldown, and battery thresholds
 - A single switch to pause the entire system without uninstalling anything
+- Enable/Disable features you don't like through the "Configurations" menu
+- Mute the beeping sound when the screen is off
 
 ---
 
