@@ -109,7 +109,7 @@ This project intentionally avoids two "expected" approaches that turned out to b
 ---
 
 ## Bug Reports/Suggestions
-- Feel free to report any bug reports/suggestions by opening an issue/discussion thread!
+- Feel free to report any bug reports/suggestions by opening an [issue](https://github.com/GalaxyJammed/PrescriptBeeper/issues) or [discussion](https://github.com/GalaxyJammed/PrescriptBeeper/discussions) thread!
 
 
 ---
