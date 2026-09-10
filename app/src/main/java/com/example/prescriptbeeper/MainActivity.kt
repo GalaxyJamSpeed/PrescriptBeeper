@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import android.content.res.ColorStateList
+import android.net.Uri
 
 class MainActivity : AppCompatActivity() {
 
@@ -86,6 +87,19 @@ class MainActivity : AppCompatActivity() {
                 if (isChecked) "Prescripts turned on" else "Prescripts turned off",
                 Toast.LENGTH_SHORT
             ).show()
+        }
+
+        UpdateChecker.checkForUpdate(this) { update ->
+            if (update != null) {
+                runOnUiThread {
+                    val banner = findViewById<TextView>(R.id.tvUpdateAvailable)
+                    banner.text = "⬆ Update Available (v${update.version})"
+                    banner.visibility = View.VISIBLE
+                    banner.setOnClickListener {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(update.url)))
+                    }
+                }
+            }
         }
     }
 

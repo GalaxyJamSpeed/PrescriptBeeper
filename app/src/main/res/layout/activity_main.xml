@@ -63,6 +63,17 @@
             android:layout_marginBottom="20dp" />
 
         <TextView
+            android:id="@+id/tvUpdateAvailable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⬆ Update Available"
+            android:textColor="#4be8ff"
+            android:textSize="11sp"
+            android:fontFamily="monospace"
+            android:visibility="gone"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CORE"

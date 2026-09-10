@@ -72,7 +72,9 @@ class AboutActivity : AppCompatActivity() {
             "The Stats screen tracks Day, Week, and Month views, each with a bar chart, a Total " +
                     "Completed vs. Total Dismissed comparison, and a breakdown by category. All-Time Stats, " +
                     "accessible from the top of that screen, shows your true lifetime totals alongside recent " +
-                    "trends covering roughly the last 13 months of detailed history."
+                    "trends covering roughly the last 13 months of detailed history. (Note: Only Accepted " +
+                    "prescripts get counted towards 'BREAKDOWN')."
+
         )
 
         addSection(

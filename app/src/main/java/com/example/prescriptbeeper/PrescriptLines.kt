@@ -12,9 +12,9 @@ object PrescriptLines {
 
     private val defaultLines = mapOf(
         "COMMUNICATION" to listOf(
-            "A VOICE REACHES OUT. ANSWER OR LET IT FADE.",
+            "A VOICE REACHES OUT. DON'T LET IT FADE.",
             "SOMEONE CALLED. LET THEM BE HEARD.",
-            "THE CHORUS GROWS LOUD. SILENCE IT OR JOIN IT.",
+            "THE CHORUS GROWS LOUD. BE SURE TO JOIN IT.",
             "DELIVER A MESSAGE TO THE SENDER"
         ),
         "BATTERY_LOW" to listOf(
