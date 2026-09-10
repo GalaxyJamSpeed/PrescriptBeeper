@@ -108,6 +108,12 @@ This project intentionally avoids two "expected" approaches that turned out to b
 
 ---
 
+## Bug Reports/Suggestions
+- Feel free to report any bug reports/suggestions by opening an issue/discussion thread!
+
+
+---
+
 ## Disclaimer
 
 This is an unofficial, non-commercial fan project inspired by *Limbus Company*, created by Project Moon. All game-related names, concepts, and imagery referenced belong to their respective owners. PrescriptBeeper is a personal utility app and is not affiliated with or endorsed by Project Moon.
