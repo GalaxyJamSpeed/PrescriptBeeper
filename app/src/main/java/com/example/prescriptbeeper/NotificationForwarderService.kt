@@ -23,6 +23,7 @@ import android.widget.ImageView
 import android.graphics.PixelFormat
 import android.util.Log
 
+
 class NotificationForwarderService : NotificationListenerService() {
 
     private val lastFiredPerPackage = mutableMapOf<String, Long>()
@@ -94,10 +95,12 @@ class NotificationForwarderService : NotificationListenerService() {
 
     private fun checkAndAlertForDevice(deviceAddress: String, deviceName: String, level: Int) {
         val prefs = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
+        Log.d("EarbudsDebug", "check: addr=$deviceAddress level=$level threshold=${prefs.getInt("earbuds_low_threshold", 30)} alreadyAlerted=${(prefs.getStringSet("earbuds_alerted_devices", emptySet()) ?: emptySet()).contains(deviceAddress)}")
+
         val threshold = prefs.getInt("earbuds_low_threshold", 30)
         val alertedDevices = (prefs.getStringSet("earbuds_alerted_devices", emptySet()) ?: emptySet()).toMutableSet()
 
-        if (level < threshold && deviceAddress !in alertedDevices) {
+        if (level <= threshold && deviceAddress !in alertedDevices) {
             alertedDevices.add(deviceAddress)
             prefs.edit().putStringSet("earbuds_alerted_devices", alertedDevices).apply()
             if (FeatureToggles.isEarbudsLowEnabled(applicationContext)) {
