@@ -229,11 +229,11 @@ class WeeklySummaryActivity : AppCompatActivity() {
 
         statsContainer.removeAllViews()
 
-        fun buildStatCard(label: String, value: String, accentColor: Int = 0xFF7ee8a3.toInt(), valueColor: Int = 0xFFdff1ff.toInt()): LinearLayout {
+        fun buildStatCard(label: String, value: String, accentColor: Int = 0xFF7ee8a3.toInt(), valueColor: Int = 0xFFdff1ff.toInt(), useRedCard: Boolean = false): LinearLayout {
             return LinearLayout(this).apply {
                 orientation = LinearLayout.VERTICAL
-                setBackgroundColor(0xFF10181c.toInt())
-                setPadding(24, 20, 24, 20)
+                setBackgroundResource(if (useRedCard) R.drawable.bg_stat_card_red else R.drawable.bg_stat_card)
+                setPadding(28, 20, 24, 20)
                 addView(TextView(this@WeeklySummaryActivity).apply {
                     text = label
                     setTextColor(accentColor)
@@ -269,7 +269,7 @@ class WeeklySummaryActivity : AppCompatActivity() {
         val completedCard = buildStatCard("TOTAL COMPLETED", "${summary.total}").apply {
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { marginEnd = 8 }
         }
-        val dismissedCard = buildStatCard("TOTAL DISMISSED", "$karmicTotal", accentColor = 0xFFff3b5c.toInt()).apply {
+        val dismissedCard = buildStatCard("TOTAL DISMISSED", "$karmicTotal", accentColor = 0xFFff3b5c.toInt(), useRedCard = true).apply {
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
         }
         topRow.addView(completedCard)

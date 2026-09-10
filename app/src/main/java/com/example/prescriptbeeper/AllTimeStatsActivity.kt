@@ -18,7 +18,6 @@ class AllTimeStatsActivity : AppCompatActivity() {
 
         val root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setBackgroundResource(R.drawable.bg_app_wallpaper)
             setPadding(48, (48 + 32 * density).toInt(), 48, 48)
         }
 
@@ -34,8 +33,8 @@ class AllTimeStatsActivity : AppCompatActivity() {
         fun statCard(label: String, value: String, accentColor: Int = 0xFF7ee8a3.toInt()) {
             val card = LinearLayout(this).apply {
                 orientation = LinearLayout.VERTICAL
-                setBackgroundColor(0xFF10181c.toInt())
-                setPadding(24, 20, 24, 20)
+                setBackgroundResource(R.drawable.bg_stat_card)
+                setPadding(28, 20, 24, 20)
                 layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
                 ).apply { bottomMargin = 12 }
@@ -62,11 +61,11 @@ class AllTimeStatsActivity : AppCompatActivity() {
             ).apply { bottomMargin = 12 }
         }
 
-        fun sideCard(label: String, value: String, accentColor: Int): LinearLayout {
+        fun sideCard(label: String, value: String, accentColor: Int, useRedCard: Boolean = false): LinearLayout {
             return LinearLayout(this).apply {
                 orientation = LinearLayout.VERTICAL
-                setBackgroundColor(0xFF10181c.toInt())
-                setPadding(24, 20, 24, 20)
+                setBackgroundResource(if (useRedCard) R.drawable.bg_stat_card_red else R.drawable.bg_stat_card)
+                setPadding(28, 20, 24, 20)
                 addView(TextView(this@AllTimeStatsActivity).apply {
                     text = label
                     setTextColor(accentColor)
@@ -85,7 +84,7 @@ class AllTimeStatsActivity : AppCompatActivity() {
         val completedCard = sideCard("TOTAL COMPLETED", "${summary.totalCompleted}", 0xFF7ee8a3.toInt()).apply {
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { marginEnd = 8 }
         }
-        val dismissedCard = sideCard("TOTAL DISMISSED", "${summary.totalDismissed}", 0xFFff3b5c.toInt()).apply {
+        val dismissedCard = sideCard("TOTAL DISMISSED", "${summary.totalDismissed}", 0xFFff3b5c.toInt(), useRedCard = true).apply {
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
         }
         topRow.addView(completedCard)
@@ -119,7 +118,10 @@ class AllTimeStatsActivity : AppCompatActivity() {
             }
         }
 
-        val scroll = ScrollView(this).apply { fitsSystemWindows = true }
+        val scroll = ScrollView(this).apply {
+            fitsSystemWindows = true
+            setBackgroundResource(R.drawable.bg_app_wallpaper)
+        }
         scroll.addView(root)
         setContentView(scroll)
     }

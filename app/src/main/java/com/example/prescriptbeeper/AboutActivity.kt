@@ -54,7 +54,7 @@ class AboutActivity : AppCompatActivity() {
             "UNLOCK STAGE",
             "Your Stage reflects how well you're keeping up with Prescripts, not how many you get. " +
                     "Once you've had at least 5 interactions in a day, your completion rate (accepted ÷ total) " +
-                    "decides whether you climb: 50%+ moves you from Stage 1 to Stage 2, and 75%+ moves you from " +
+                    "decides whether you climb: 50%+ moves you from Stage 1 to Stage 2, and with 15 interactions at 75%+ Accepted, moves you from " +
                     "Stage 2 to Stage 3.\n\nStages always move one step at a time and never skip (you can't " +
                     "jump straight from Stage 1 to 3) and once reached, a Stage never drops back down for the " +
                     "rest of the day. Everything resets to Stage 1 at midnight."
