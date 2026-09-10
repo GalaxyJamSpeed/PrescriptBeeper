@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 
 class BackupRestoreActivity : AppCompatActivity() {
 
@@ -79,6 +80,55 @@ class BackupRestoreActivity : AppCompatActivity() {
             setOnClickListener { importLauncher.launch(arrayOf("text/plain")) }
         })
 
+        root.addView(Button(this).apply {
+            text = "Delete All Data"
+            setBackgroundResource(R.drawable.bg_widget_dark)
+            setTextColor(0xFFff3b5c.toInt())
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { topMargin = 32 }
+            setOnClickListener { confirmDeleteAllData() }
+        })
+
         setContentView(root)
+
+        setContentView(root)
+    }
+
+    private fun confirmDeleteAllData() {
+        AlertDialog.Builder(this)
+            .setTitle("Delete All Data?")
+            .setMessage(
+                "This permanently erases every Prescript, Karmic Consequence, custom line, watched " +
+                        "app, reminder, and setting - resetting the app completely back to a fresh install. " +
+                        "This cannot be undone. Consider exporting a backup first if you're unsure."
+            )
+            .setPositiveButton("Delete Everything") { _, _ ->
+                AlertDialog.Builder(this)
+                    .setTitle("Are you absolutely sure?")
+                    .setMessage("There is no way to recover this data afterward.")
+                    .setPositiveButton("Yes, Delete It All") { _, _ ->
+                        performFullDelete()
+                    }
+                    .setNegativeButton("Cancel", null)
+                    .show()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun performFullDelete() {
+        getSharedPreferences("prescript_prefs", MODE_PRIVATE).edit().clear().apply()
+
+        CalendarScheduler.scheduleDailyCheck(this)
+        PrescriptWidgetProvider.updateAll(this)
+
+        Toast.makeText(this, "All data deleted. Restarting app.", Toast.LENGTH_LONG).show()
+
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        startActivity(intent)
+        finish()
     }
 }

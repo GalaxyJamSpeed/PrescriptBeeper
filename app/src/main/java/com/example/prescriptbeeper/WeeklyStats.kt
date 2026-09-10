@@ -247,6 +247,7 @@ object WeeklyStats {
 
     fun getAllTimeSummary(context: Context): AllTimeSummary {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        migrateLifetimeTotalsIfNeeded(prefs)
         val todayKey = dateFormat.format(Date())
         val recent = getSummaryForRange(context, cutoffDate(), todayKey)
 
@@ -259,5 +260,21 @@ object WeeklyStats {
             topCategoryCount = recent.topCategoryCount,
             byCategory = recent.byCategory
         )
+    }
+
+    private fun migrateLifetimeTotalsIfNeeded(prefs: SharedPreferences) {
+        if (prefs.getBoolean("lifetime_stats_migrated", false)) return
+
+        val completedSum = loadMap(prefs).values.sum()
+        val karmicSum = loadKarmicMap(prefs).values.sum()
+
+        val currentCompleted = prefs.getInt("lifetime_completed_total", 0)
+        val currentKarmic = prefs.getInt("lifetime_karmic_total", 0)
+
+        prefs.edit()
+            .putInt("lifetime_completed_total", currentCompleted + completedSum)
+            .putInt("lifetime_karmic_total", currentKarmic + karmicSum)
+            .putBoolean("lifetime_stats_migrated", true)
+            .apply()
     }
 }
