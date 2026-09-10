@@ -8,7 +8,7 @@ import kotlin.concurrent.thread
 
 object UpdateChecker {
 
-    private const val CURRENT_VERSION = "2.4.1"
+    private const val CURRENT_VERSION = "2.4.2"
     private const val REPO_API_URL = "https://api.github.com/repos/GalaxyJamSpeed/PrescriptBeeper/releases/latest"
     private const val CHECK_INTERVAL_MS = 24 * 60 * 60 * 1000L
 

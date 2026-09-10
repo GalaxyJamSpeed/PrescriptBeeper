@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="top|center_horizontal"
-    android:fitsSystemWindows="true"
-    android:padding="24dp"
+    android:fillViewport="true"
     android:background="@drawable/bg_app_wallpaper">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="top|center_horizontal"
+        android:fitsSystemWindows="true"
+        android:padding="24dp">
 
     <TextView
         android:layout_width="wrap_content"
@@ -17,6 +22,15 @@
         android:fontFamily="monospace"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="32dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="If a button below says permission is unavailable or greyed out:\n\n1. Tap the permission button anyway, and tap OK on any &quot;Restricted setting&quot; popup.\n2. Go to your phone\'s Settings → Apps → PrescriptBeeper.\n3. Tap the three-dot menu (⋮) in the top-right corner.\n4. Select &quot;Allow restricted settings&quot; (you may need your PIN/fingerprint).\n5. Come back here and try the button again.\n\nNote: Autostart is by default blue regardless if it has the permission or not. You should check yourself if the permission is given manually."
+        android:textColor="#8fa3ad"
+        android:textSize="10sp"
+        android:fontFamily="monospace"
+        android:layout_marginBottom="24dp" />
 
     <Button
         android:id="@+id/btnNotifAccess"
@@ -46,17 +60,17 @@
         android:layout_marginTop="16dp" />
 
     <Button
-        android:id="@+id/btnAutostart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Enable Autostart (Xiaomi/MIUI)"
-        android:layout_marginTop="16dp" />
-
-    <Button
         android:id="@+id/btnUsageAccess"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Grant Usage Access (for Do Not Disturb Apps)"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnAutostart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enable Autostart (Xiaomi/MIUI)"
         android:layout_marginTop="16dp" />
 
     <TextView
@@ -68,4 +82,5 @@
         android:fontFamily="monospace"
         android:layout_marginTop="12dp" />
 
-</LinearLayout>
+    </LinearLayout>
+    </ScrollView>
