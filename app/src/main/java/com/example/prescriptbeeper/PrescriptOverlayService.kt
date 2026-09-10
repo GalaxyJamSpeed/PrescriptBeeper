@@ -159,6 +159,7 @@ class PrescriptOverlayService : Service() {
         val (stage, stageIcon) = computeStage(prefs)
         view.findViewById<TextView>(R.id.tvFooterCount).text = "$completedCount prescripts completed — Stage $stage"
         view.findViewById<ImageView>(R.id.ivStageIcon).setImageResource(stageIcon)
+        view.findViewById<TextView>(R.id.tvStageProgress).text = StageCalculator.getProgressText(prefs)
 
         val karmicCount = prefs.getInt("karmic_consequences", 0)
         val karmicRow = view.findViewById<LinearLayout>(R.id.karmicRow)
@@ -254,31 +255,8 @@ class PrescriptOverlayService : Service() {
     }
 
     private fun computeStage(prefs: android.content.SharedPreferences): Pair<Int, Int> {
-        val completed = prefs.getInt("prescripts_completed", 0)
-        val karmic = prefs.getInt("karmic_consequences", 0)
-        val totalInteractions = completed + karmic
-        val minSample = 5
-
-        val ratio = if (totalInteractions == 0) 0f else completed.toFloat() / totalInteractions
-        val currentStage = prefs.getInt("highest_stage_today", 1)
-
-        var newStage = currentStage
-        if (currentStage == 1 && totalInteractions >= minSample && ratio >= 0.5f) {
-            newStage = 2
-        } else if (currentStage == 2 && totalInteractions >= minSample && ratio >= 0.75f) {
-            newStage = 3
-        }
-
-        if (newStage != currentStage) {
-            prefs.edit().putInt("highest_stage_today", newStage).apply()
-        }
-
-        val icon = when (newStage) {
-            3 -> R.drawable.icunlock3
-            2 -> R.drawable.icunlock2
-            else -> R.drawable.icunlock1
-        }
-        return newStage to icon
+        val stage = StageCalculator.computeAndAdvanceStage(prefs)
+        return stage to StageCalculator.getStageIcon(stage)
     }
 
     private fun resetCounterIfNewDay() {

@@ -35,6 +35,7 @@ class PrescriptWidgetProvider : AppWidgetProvider() {
             val lastDate = prefs.getString("last_reset_date", null)
             val count = if (lastDate != today) 0 else prefs.getInt("prescripts_completed", 0)
             val stage = if (lastDate != today) 1 else prefs.getInt("highest_stage_today", 1)
+            val progressText = if (lastDate != today) "0/5→S2" else StageCalculator.getCompactProgressText(prefs)
 
             val icon = when (stage) {
                 3 -> R.drawable.icunlock3
@@ -46,6 +47,7 @@ class PrescriptWidgetProvider : AppWidgetProvider() {
             views.setTextViewText(R.id.widgetCountText, "$count")
             views.setTextViewText(R.id.widgetLabelText, "STAGE $stage")
             views.setImageViewResource(R.id.widgetStageIcon, icon)
+            views.setTextViewText(R.id.widgetStageProgress, progressText)
 
             val karmicCount = if (lastDate != today) 0 else prefs.getInt("karmic_consequences", 0)
             if (karmicCount > 0) {
