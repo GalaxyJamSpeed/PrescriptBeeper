@@ -86,7 +86,7 @@ class BackupRestoreActivity : AppCompatActivity() {
             setTextColor(0xFFff3b5c.toInt())
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply { topMargin = 32 }
+            ).apply { topMargin = 16 }
             setOnClickListener { confirmDeleteAllData() }
         })
 

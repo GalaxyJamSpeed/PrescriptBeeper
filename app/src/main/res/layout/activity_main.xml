@@ -136,7 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Setup and Testing"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="12dp" />
 
         <Button
             android:id="@+id/btnOpenBackupRestore"
