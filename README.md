@@ -123,3 +123,9 @@ This is an unofficial, non-commercial fan project inspired by *Limbus Company*, 
   <br>
   <em>"_THE INDEX AWAITS YOUR PARTICIPATION._"</em>
 </div>
+
+---
+
+## Project Notes
+
+This will be one of many random projects I make for fun to test different functions on android. This currently focuses on **Notifications**, **Display Popups** and **Set Popups that appear at certain times of day**
