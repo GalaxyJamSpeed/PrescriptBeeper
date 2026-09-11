@@ -165,7 +165,7 @@ class PrescriptOverlayService : Service() {
         val (stage, stageIcon) = computeStage(prefs)
         view.findViewById<TextView>(R.id.tvFooterCount).text = "$completedCount prescripts completed"
         view.findViewById<ImageView>(R.id.ivCompletedIcon).setImageResource(R.drawable.iccompleted)
-        view.findViewById<TextView>(R.id.tvStageLabel).text = "- Stage $stage"
+        view.findViewById<TextView>(R.id.tvStageLabel).text = "Stage $stage"
         view.findViewById<ImageView>(R.id.ivStageIcon).setImageResource(stageIcon)
         view.findViewById<TextView>(R.id.tvStageProgress).text = StageCalculator.getProgressText(prefs)
 
