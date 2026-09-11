@@ -37,6 +37,7 @@ class PrescriptOverlayService : Service() {
     private var notificationContent: String = ""
     private var senderName: String? = null
     private var category: String = "GENERIC"
+    private var isTest: Boolean = false
 
 
     override fun onBind(intent: Intent?): IBinder? = null
@@ -45,6 +46,7 @@ class PrescriptOverlayService : Service() {
         startAsForeground()
         senderName = intent?.getStringExtra("SENDER_NAME")
         category = intent?.getStringExtra("CATEGORY") ?: "GENERIC"
+        isTest = intent?.getBooleanExtra("IS_TEST", false) ?: false
         val text = intent?.getStringExtra("PRESCRIPT_TEXT") ?: "SOMETHING STIRS."
         sourcePackage = intent?.getStringExtra("SOURCE_PACKAGE")
         notificationContent = intent?.getStringExtra("NOTIFICATION_CONTENT") ?: ""
@@ -136,7 +138,9 @@ class PrescriptOverlayService : Service() {
             val p = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
             p.edit().putInt("prescripts_completed", p.getInt("prescripts_completed", 0) + 1).apply()
             PrescriptLog.updateStatus(applicationContext, currentLogId, "ACCEPTED")
-            WeeklyStats.recordAccept(applicationContext, category)
+            if (!isTest) {
+                WeeklyStats.recordAccept(applicationContext, category)
+            }
             PrescriptWidgetProvider.updateAll(applicationContext)
 
             sourcePackage?.let { pkg ->
@@ -157,7 +161,9 @@ class PrescriptOverlayService : Service() {
 
         val completedCount = prefs.getInt("prescripts_completed", 0)
         val (stage, stageIcon) = computeStage(prefs)
-        view.findViewById<TextView>(R.id.tvFooterCount).text = "$completedCount prescripts completed — Stage $stage"
+        view.findViewById<TextView>(R.id.tvFooterCount).text = "$completedCount prescripts completed"
+        view.findViewById<ImageView>(R.id.ivCompletedIcon).setImageResource(R.drawable.iccompleted)
+        view.findViewById<TextView>(R.id.tvStageLabel).text = "- Stage $stage"
         view.findViewById<ImageView>(R.id.ivStageIcon).setImageResource(stageIcon)
         view.findViewById<TextView>(R.id.tvStageProgress).text = StageCalculator.getProgressText(prefs)
 
@@ -279,7 +285,9 @@ class PrescriptOverlayService : Service() {
         val prefs = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
         val newCount = prefs.getInt("karmic_consequences", 0) + 1
         prefs.edit().putInt("karmic_consequences", newCount).apply()
-        WeeklyStats.recordKarmic(applicationContext)
+        if (!isTest) {
+            WeeklyStats.recordKarmic(applicationContext)
+        }
         PrescriptWidgetProvider.updateAll(applicationContext)
     }
 }

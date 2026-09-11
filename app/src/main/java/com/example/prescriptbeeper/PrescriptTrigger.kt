@@ -16,7 +16,8 @@ object PrescriptTrigger {
         overrideText: String? = null,
         sourcePackage: String? = null,
         notificationContent: String? = null,
-        senderName: String? = null
+        senderName: String? = null,
+        isTest: Boolean = false
     ) {
         val prefs = context.getSharedPreferences("prescript_prefs", Context.MODE_PRIVATE)
         if (!prefs.getBoolean("prescript_enabled", true)) return
@@ -33,6 +34,7 @@ object PrescriptTrigger {
             putExtra("NOTIFICATION_CONTENT", notificationContent)
             putExtra("CATEGORY", category)
             putExtra("SENDER_NAME", senderName)
+            putExtra("IS_TEST", isTest)
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

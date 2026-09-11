@@ -113,20 +113,36 @@
                 android:gravity="center"
                 android:layout_marginTop="14dp">
 
-                <ImageView
-                    android:id="@+id/ivStageIcon"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_marginEnd="6dp" />
-
                 <TextView
                     android:id="@+id/tvFooterCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0 prescripts completed — Stage 1"
+                    android:text="0 prescripts completed"
                     android:textColor="#5c6975"
                     android:textSize="9sp"
                     android:fontFamily="monospace" />
+
+                <ImageView
+                    android:id="@+id/ivCompletedIcon"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="6dp" />
+
+                <TextView
+                    android:id="@+id/tvStageLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="- Stage 1"
+                    android:textColor="#5c6975"
+                    android:textSize="9sp"
+                    android:fontFamily="monospace" />
+
+                <ImageView
+                    android:id="@+id/ivStageIcon"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginStart="6dp" />
 
             </LinearLayout>
 

@@ -44,7 +44,7 @@ class PrescriptWidgetProvider : AppWidgetProvider() {
             }
 
             val views = RemoteViews(context.packageName, R.layout.widget_prescript)
-            views.setTextViewText(R.id.widgetCountText, "$count")
+            views.setImageViewResource(R.id.widgetCompletedIcon, R.drawable.iccompleted)
             views.setTextViewText(R.id.widgetLabelText, "STAGE $stage")
             views.setImageViewResource(R.id.widgetStageIcon, icon)
             views.setTextViewText(R.id.widgetStageProgress, progressText)

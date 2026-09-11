@@ -8,15 +8,29 @@
     android:background="@drawable/bg_widget_dark"
     android:padding="10dp">
 
-    <TextView
-        android:id="@+id/widgetCountText"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
-        android:textColor="#4be8ff"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:fontFamily="monospace" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/widgetCountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="#4be8ff"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:fontFamily="monospace" />
+
+        <ImageView
+            android:id="@+id/widgetCompletedIcon"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="4dp" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"

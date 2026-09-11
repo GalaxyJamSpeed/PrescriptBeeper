@@ -10,7 +10,7 @@ object CalendarScheduler {
 
     private const val REQUEST_CODE = 5001
 
-    fun scheduleDailyCheck(context: Context, hour: Int = 12, minute: Int = 0) {
+    fun scheduleDailyCheck(context: Context, hour: Int = 0, minute: Int = 0) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val intent = Intent(context, CalendarAlarmReceiver::class.java)
