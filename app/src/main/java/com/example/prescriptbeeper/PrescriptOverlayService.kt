@@ -136,7 +136,9 @@ class PrescriptOverlayService : Service() {
         view.findViewById<Button>(R.id.btnAccept).setOnClickListener {
             resetCounterIfNewDay()
             val p = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
-            p.edit().putInt("prescripts_completed", p.getInt("prescripts_completed", 0) + 1).apply()
+            if (!isTest) {
+                p.edit().putInt("prescripts_completed", p.getInt("prescripts_completed", 0) + 1).apply()
+            }
             PrescriptLog.updateStatus(applicationContext, currentLogId, "ACCEPTED")
             if (!isTest) {
                 WeeklyStats.recordAccept(applicationContext, category)
@@ -282,12 +284,11 @@ class PrescriptOverlayService : Service() {
     }
 
     private fun recordKarmicConsequence() {
+        if (isTest) return
         val prefs = getSharedPreferences("prescript_prefs", MODE_PRIVATE)
         val newCount = prefs.getInt("karmic_consequences", 0) + 1
         prefs.edit().putInt("karmic_consequences", newCount).apply()
-        if (!isTest) {
-            WeeklyStats.recordKarmic(applicationContext)
-        }
+        WeeklyStats.recordKarmic(applicationContext)
         PrescriptWidgetProvider.updateAll(applicationContext)
     }
 }
